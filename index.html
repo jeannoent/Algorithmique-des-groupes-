@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+          "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Main</title>
+    <script type="text/javascript" src="main.js"></script>
+  </head>
+  <body>
+    <input type="text" name="resolve-input">
+    <h4>Le resultat : <h5 id="result"></h5></h4>
+  </body>
+  <script type="text/javascript">
+    const input = document.querySelector('input');
+    const log = document.getElementById('result');
+
+    input.addEventListener('input', updateValue);
+
+    function updateValue(e) {
+      let value = parseInt(e.target.value)
+      if (value>=2){
+        log.textContent = ocamlcallback.resolve(value);
+      }
+      
+    }
+  </script>
+</html>
