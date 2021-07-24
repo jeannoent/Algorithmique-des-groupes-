@@ -1,0 +1,11 @@
+> Revoir les bijections [[0,n1-1]]x...x[[0,np-1]] <-> [[0,n1...np-1]]
+> tester sur des cas classique : n1 = 2 ; n2 = 3 vs Z/6Z
+
+> fonction qui en entrée prends un array arr = [n1,...np] et renvoie pi[Z/n1Zx....Z/n_pZ]
+> fonction qui en entrée prend un entier n et renvoie {pi[Prod_i Z/niZ], ou Prod_i ni = n}
+
+> permToInt à coder
+> loi sur [[0,n! -1 ]] à déduire
+> fonction qui prend en entrée n et renvoie pi[Sn] (Sn groupe symétrique).
+
+> l'histoire d'interface sueur.
