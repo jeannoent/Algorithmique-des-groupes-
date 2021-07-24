@@ -12,9 +12,9 @@ let decomp_prod n =
     	aux 2 n [];
         !res;;
         
-let lexical_order (n,m) (i,j) = m*i+j;;
+let lexical_order m (i,j) = m*i+j;;
 
-let reciproque_order (n,m) k = (k/m,k mod m);;
+let reciproque_order m k = (k/m,k mod m);;
 
 (*calcule les [|n|] à chaque étape du calcul*)
 let sums arr =
@@ -28,11 +28,10 @@ let sums arr =
 
 
 let lex_order arr x = 
-	let s = sums arr in
     let n = Array.length arr in
-    let res = ref (lexical_order (arr.(0),arr.(1)) (x.(0),x.(1))) in
+    let res = ref (lexical_order arr.(1) (x.(0),x.(1))) in
     for i=1 to n-2 do
-    	res:= lexical_order (s.(i),arr.(i+1)) (!res,x.(i+1))
+    	res:= lexical_order arr.(i+1) (!res,x.(i+1))
     done;
     !res;;
 
@@ -40,14 +39,13 @@ let recip arr x =
 	let n = Array.length arr in
     if n=1 then [|x|]
     else begin
-		let s = sums arr in
         let res = Array.make n 0 in
-        let (a1,b1) = reciproque_order (s.(n-2),arr.(n-1)) x in
+        let (a1,b1) = reciproque_order arr.(n-1) x in
         let a = ref a1 and b = ref b1 in
         for i=0 to n-2 do
         	res.(n-i-1) <- !b;
             if i<> n-2 then (
-            	let new1  = reciproque_order (s.(n-3-i),arr.(n-2-i)) !a in
+            	let new1  = reciproque_order arr.(n-2-i) !a in
             	a := fst new1;
             	b := snd new1 )
         done;
