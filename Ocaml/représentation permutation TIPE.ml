@@ -7,7 +7,10 @@ let decomposerbase k n =
         res.(i+1) <- !current mod n
     done;
     res;;
-
+let rec fac n = match n with
+|0 -> 1
+|n -> n*(fac (n-1));;
+ 
 let decomposerFact k n =
 	let res = Array.make n 0 in
     let current = ref k in
@@ -61,8 +64,3 @@ let inv t =
     done;
     res;;
 
-let permToInt t = 
-	let n = Array.length t in
-    let k = ref 0 in
-    for i = 0 to n-1 do
-    	k := !k + 

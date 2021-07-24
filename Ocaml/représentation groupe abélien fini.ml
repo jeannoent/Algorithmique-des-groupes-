@@ -33,7 +33,7 @@ let lex_order arr x =
     for i=1 to n-2 do
     	res:= lexical_order arr.(i+1) (!res,x.(i+1))
     done;
-    !res;;
+    !res mod n;;
 
 let recip arr x =
 	let n = Array.length arr in
@@ -71,5 +71,5 @@ let opbis t1 t2 arr =
     done;
     t;;
 
-let abelian_epsilon arr i j = lex_order arr (opbis (recip arr i) (recip arr j) arr);;
+let abelian_epsilon arr (i,j) = lex_order arr (opbis (recip arr i) (recip arr j) arr);;
 

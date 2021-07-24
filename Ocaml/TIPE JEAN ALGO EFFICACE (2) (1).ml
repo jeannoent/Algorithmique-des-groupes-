@@ -88,7 +88,7 @@ let nb_gen n e  =
         	res:= (!res mod n) + ((1 lsl (n-1-List.hd l)) mod n) mod n 
         else List.iter aux (next_subtree l n)
     in aux [];
-    !res mod n;;
+    !res;;
     
 let znz n (i,j) = 
     	if i <= j then (j - i) mod n
