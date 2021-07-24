@@ -68,13 +68,13 @@ let rec pow_mod a n m = match n with
   | 1 -> a
   | _ -> 
     let b = pow_mod a (n / 2) m mod m in
-    b * b * (if n mod 2 = 0 then 1 else a mod m );;
+    (b * b mod m)* (if n mod 2 = 0 then 1 else a mod m ) mod m;;
     
 
 (*retourne nb_gen mod n, calcul plus long mais 
 permet d'éviter (en général) les overflows dans les cas où 
 n>31 où n>63 selon l'architecture, où la valeur de nb_gen ne serait pas correcte*)
-let n_gen_mod n e = 
+let nb_gen_mod n e = 
     let res= ref 0 in
     let rec aux l=
     	if est_gen (n,l,e) then
