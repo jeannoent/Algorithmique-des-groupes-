@@ -1,5 +1,16 @@
 type ggraphe = int * int list * ((int*int) -> int);;
 
+
+let print_list l =
+	print_string "[";
+    let rec aux  = function
+    	|[] -> print_endline "]"
+        |[x] -> print_int x; print_endline "]"
+        |x::l -> print_int x;print_string ";"; aux l 
+     in aux l;;   
+     
+
+
 (*construit un table de hash contenant 
 les tuples (i,()) pour i de 0 à n-1*)
 let constr_hash n =
@@ -40,60 +51,45 @@ let next_subtree l max =
     done;
     !res;;
     
-(*k pamri n*)
-let comb k n =
-	let res = ref 1 in
-    for i = 0  to k-1 do
-    	res:= !res * (n-i)
-    done;
-    let div = ref 1 in
-    for i =2 to k do
-    	div := i* !div;
-    done;
-    !res/ !div;;
-
-(*génère une array de taille n+1 
-contenant les sommes de i à n de i parmi n pour i de 0 à n+1*)
-let gen_combs n=
-	let res = Array.make 0 (n+1) in
-    res.(n) <- 1;
-    for i=0 to n-1 do
-    	res.(i) <- res.(i+1) + comb i n
-    done;
-    res;;
-    
-let gen_card_sub_trees n =
-	let res = Array.make n 0 in
-    res.(n-1)<- 1;
-    for i=2 to n do
-   		res.(n-i) <- res.(n-i+1)+i
-    done;
-    res;;
-    
-let print_list l =
-	print_string "[";
-    let rec aux  = function
-    	|[] -> print_endline "]"
-        |[x] -> print_int x; print_endline "]"
-        |x::l -> print_int x;print_string ";"; aux l 
-     in aux l;;   
-     
-    
-
+(*retourne le nombre de parties génératrices d'un goupe d'ordre n de loi e*)
 let nb_gen n e  =
-	(*let nb_c = gen_card_sub_trees n in*)
 	let res= ref 0 in
     let rec aux l=
     	if est_gen (n,l,e) then
-        	res:= (!res mod n) + ((1 lsl (n-1-List.hd l)) mod n) mod n 
+        	res:= !res + (1 lsl (n-1-List.hd l))
         else List.iter aux (next_subtree l n)
     in aux [];
     !res;;
     
+
+(*returne a^n mod m*)    
+let rec pow_mod a n m = match n with
+  | 0 -> 1
+  | 1 -> a
+  | _ -> 
+    let b = pow_mod a (n / 2) m mod m in
+    b * b * (if n mod 2 = 0 then 1 else a mod m );;
+    
+
+(*retourne nb_gen mod n, calcul plus long mais 
+permet d'éviter (en général) les overflows dans les cas où 
+n>31 où n>63 selon l'architecture, où la valeur de nb_gen ne serait pas correcte*)
+let n_gen_mod n e = 
+    let res= ref 0 in
+    let rec aux l=
+    	if est_gen (n,l,e) then
+        	res:= (!res mod n) + (pow_mod 2 (n-1-List.hd l) n) mod n 
+        else List.iter aux (next_subtree l n)
+    in aux [];
+    !res;;
+
+
 let znz n (i,j) = 
     	if i <= j then (j - i) mod n
               else (n + (j-i) mod n) mod n;;
               
+
+
 nb_gen 26 (znz 26);;            
 
 
