@@ -1,4 +1,3 @@
-open Permutation
 open Loi_gp_ab
 
 type ggraphe = int * int list * ((int*int) -> int);;
@@ -93,8 +92,7 @@ let znz n (i,j) =
               
 
 
-nb_gen 26 (znz 26);;            
-
+let%test "bijection" = nb_gen 12 (znz 12) = nb_gen 12 (abelian_epsilon [|3;4|]) 
 
         
         
