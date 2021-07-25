@@ -11,59 +11,47 @@ let decomp_prod n =
     in
     	aux 2 n [];
         !res;;
+
+let lex_order arr t = 
+	let n = Array.length arr in
+    let p = ref 1 and res = ref t.(n-1) in
+    for i = 1 to n-1 do
+    	p := (!p)*arr.(n-i);
+        res := !res + (!p)*t.(n-i-1);
+    done;
+    !res;;
+    
+let recip_order arr m = 
+	let n = Array.length arr in
+    let t = Array.make n 0 and elt = ref m in
+    t.(n-1) <- m mod arr.(n-1);
+    for i = 0 to n-2 do
+    	elt := (!elt - t.(n-i-1))/arr.(n-i-1);
+        t.(n-i-2) <- !elt mod arr.(n-i-2);
+    done;
+    t;;
+ 
         
-let lexical_order m (i,j) = m*i+j;;
-
-let reciproque_order m k = (k/m,k mod m);;
-
-
-let lex_order arr l = 
-    let rec aux l i = 
-    match l with
-        |[] -> failwith "empty set"
-        |[x] -> x
-            |n::m::r2 -> aux ((lexical_order arr.(i+1) (n,m))::r2) (i+1)
-    in aux l 0;;
-
-
-let l_o_t (a,b) = (*print_int a; print_newline ();*) [b;a];;
-
-let recip arr x =
-    let n = Array.length arr in
-    if n=1 then [x]
-    else begin
-        let rec aux y i =
-            if i=2 then l_o_t (reciproque_order arr.(1) y)
-            else begin
-                 let (a,b) = reciproque_order arr.(i-1) y in
-                    (*print_int a; print_newline ();*)
-                    b::(aux a (i-1))
-                end
-        in List.rev (aux x n)
-    end;;
-
 let op t1 t2 arr = 
-    let rec aux l1 l2 i = match l1, l2 with 
-        |[],[] -> []
-        |h1::r1,h2::r2 -> (h1 + h2 mod arr.(i))::(aux r1 r2 (i+1))
-        |_ -> failwith "error"
-    in aux t1 t2 0
+    let n = Array.length arr in
+    let t = Array.make n 0 in
+    for i = 0 to n-1 do
+      t.(i) <- (t1.(i)+t2.(i)) mod arr.(i)
+    done;
+    t;;
 
     
-let loi arr i j = lex_order arr (op (recip arr i) (recip arr j) arr);;
+let loi arr i j = lex_order arr (op (recip_order arr i) (recip_order arr j) arr);;
 
 let opbis t1 t2 arr = 
-    let rec aux l1 l2 i = match l1, l2 with 
-        |[],[] -> []
-        |h1::r1,h2::r2 -> (((h2 + h1) mod arr.(i))+ arr.(i) mod arr.(i))::(aux r1 r2 (i+1))
-        |_ -> failwith "error"
-    in aux t1 t2 0
+	let n = Array.length t1 in
+    let t = Array.make n 0 in
+    for i = 0 to n-1 do
+    	t.(i) <- ((((t2.(i) - t1.(i)) ) mod arr.(i)) + arr.(i)) mod arr.(i);
+    done;
+    t;;
 
 
-let abelian_epsilon arr (i,j) = lex_order arr (opbis (recip arr i) (recip arr j) arr);;
-
-
-let rec check arr n i = if i=(n-1) then lex_order arr (recip arr (n-1)) = (n-1)
-    else (lex_order arr (recip arr i) = i) && (check arr n (i+1))
+let abelian_epsilon arr (i,j) = lex_order arr (opbis (recip_order arr i) (recip_order arr j) arr);;
 
 
