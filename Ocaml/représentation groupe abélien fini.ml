@@ -66,5 +66,4 @@ let abelian_epsilon arr (i,j) = lex_order arr (opbis (recip arr i) (recip arr j)
 let rec check arr n i = if i=(n-1) then lex_order arr (recip arr (n-1)) = (n-1)
     else (lex_order arr (recip arr i) = i) && (check arr n (i+1))
 
-let%test "bij" = check [|4;5|] 20 0
 
