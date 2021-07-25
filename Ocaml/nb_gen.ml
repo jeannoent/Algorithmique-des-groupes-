@@ -1,3 +1,6 @@
+open Permutation
+open Loi_gp_ab
+
 type ggraphe = int * int list * ((int*int) -> int);;
 
 
