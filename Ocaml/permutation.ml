@@ -101,7 +101,7 @@ let sym_op n k1 k2 =
     permToInt (comp t1 t2)
 ;;
 
-let sym_epsilon n k1 k2 =
+let sym_epsilon n (k1,k2) =
     let t1 =  inv (intToPerm k1 n) in
     let t2 = intToPerm k2 n in
     permToInt (comp t1 t2)
