@@ -1,3 +1,6 @@
+let processed_laws = ref ([||],[||])
+
+
 let decomp_prod n = 
 	let res = ref [] in
     let rec aux acc_prec acc_left acc_list = 
@@ -21,6 +24,7 @@ let lex_order arr t =
         res := !res + (!p)*t.(n-i-1);
     done;
     !res;;
+
     
 let recip_order arr m = 
 	let n = Array.length arr in
@@ -40,9 +44,10 @@ let op t1 t2 arr =
       t.(i) <- (t1.(i)+t2.(i)) mod arr.(i)
     done;
     t;;
-
     
+
 let loi arr i j = lex_order arr (op (recip_order arr i) (recip_order arr j) arr);;
+
 
 let opbis t1 t2 arr = 
 	let n = Array.length t1 in
@@ -53,10 +58,33 @@ let opbis t1 t2 arr =
     t;;
 
 
-let abelian_epsilon arr (i,j) = lex_order arr (opbis (recip_order arr i) (recip_order arr j) arr);;
+let order arr =
+    let n = Array.length arr in
+    let res = ref 1 in
+    for i=0 to n-1 do
+        res:= !res*arr.(i)
+    done;
+    !res;;
 
 
-let sort comp arr =
-    let res = Array.copy arr in
-    Array.sort comp res;
-    res;;
+let process_law arr =
+    let ord = order arr in
+    let res = Array.make_matrix ord ord 0 in
+    for i=0 to ord-1 do
+        for j=0 to ord-1 do
+        res.(i).(j) <- lex_order arr (opbis (recip_order arr i) (recip_order arr j) arr)
+        done;
+    done;
+    processed_laws := (arr,res);;
+
+
+let abelian_epsilon arr (i,j) = 
+    if fst !processed_laws <> arr then 
+        process_law arr;
+    (snd !processed_laws).(i).(j)
+    ;;
+
+    let sort comp arr =
+        let res = Array.copy arr in
+        Array.sort comp res;
+        res;;
