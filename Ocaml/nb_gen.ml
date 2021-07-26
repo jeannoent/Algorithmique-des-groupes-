@@ -4,14 +4,30 @@ open Permutation
 type ggraphe = int * int list * ((int*int) -> int);;
 
 
-let print_list l =
+let print_list_int l =
 	print_string "[";
     let rec aux  = function
     	|[] -> print_endline "]"
         |[x] -> print_int x; print_endline "]"
         |x::l -> print_int x;print_string ";"; aux l 
      in aux l;;   
-     
+
+let print_array arr = 
+    let n = Array.length arr in
+    print_string "[|";
+    for i=0 to n-2 do
+        print_int arr.(i);print_string ";"
+    done;
+    print_int arr.(n-1);
+    print_string "|]"
+
+let print_list_array l =    
+    print_string "[";
+    let rec aux  = function
+    	|[] -> print_endline "]"
+        |[x] -> print_array x; print_endline "]"
+        |x::l -> print_array x;print_string ";"; aux l 
+     in aux l;;   
 
 
 (*construit un table de hash contenant 
@@ -84,7 +100,7 @@ let nb_gen_mod n e =
         	res:= (!res mod n) + (pow_mod 2 (n-1-List.hd l) n) mod n 
         else List.iter aux (next_subtree l n)
     in aux [];
-    !res;;
+    !res mod n;;
 
 
 let znz n (i,j) = 
@@ -100,6 +116,13 @@ let abelian_gen arr =
     done;
     nb_gen !n (abelian_epsilon arr);;
 
+let abelian_gen_mod arr = 
+    let n = ref 1 and m = Array.length arr in
+    for i = 0 to m-1 do
+          n := arr.(i)*(!n)
+    done;
+    nb_gen_mod !n (abelian_epsilon arr);;    
+
  let all_abelian n = 
     let prod = (decomp_prod n) in
     let res = ref [] in
@@ -110,6 +133,18 @@ let abelian_gen arr =
     in
     aux prod;
     !res;;
+
+ let all_not_abelian n = 
+    let prod = (decomp_prod n) in
+    let res = ref [] in
+    let rec aux l = match l with
+    |[] -> ()
+    |arr::d -> if abelian_gen_mod arr <> 0 then( print_int (abelian_gen_mod arr); print_newline ());res := (arr)::(!res);
+               aux d;
+    in
+    aux prod;
+    !res;;
+
 
 let pi_symetric n = nb_gen n (sym_epsilon n);;       
    

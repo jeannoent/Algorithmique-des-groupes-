@@ -1,6 +1,6 @@
 open Loi_gp_ab
 open Nb_gen
-open Permutation
+(*open Permutation
 
 exception PermError
 
@@ -16,3 +16,18 @@ let perm_test n =
 
 
 let%test "permutation" =  perm_test 5
+
+
+let%test "gen permutation" = print_string "Nb de part gen de S4: ";print_int (nb_gen (fac 4) (sym_epsilon 4)) ; false
+
+*)
+
+let test_all_abelian n =
+  let l = all_abelian n in
+  let rec aux = function
+    |[] -> true
+    |h::r -> if not ((h mod n) = 0) then (print_int h;false)else aux r
+  in aux l
+
+
+  let%test_unit "all abelian" = print_list_array (decomp_prod 6)
