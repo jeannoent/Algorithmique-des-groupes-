@@ -1,3 +1,4 @@
+open Loi_gp_ab
 
 type ggraphe = int * int list * ((int*int) -> int);;
 
@@ -107,7 +108,7 @@ let abelian_gen arr =
     |arr::d -> res := ((abelian_gen arr))::(!res);
                aux d;
     in
-    aux prod
+    aux prod;
     !res;;
 
         
