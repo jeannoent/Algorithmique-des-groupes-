@@ -1,4 +1,5 @@
 open Loi_gp_ab
+open Permutation
 
 type ggraphe = int * int list * ((int*int) -> int);;
 
@@ -110,5 +111,5 @@ let abelian_gen arr =
     aux prod;
     !res;;
 
-        
+let pi_symetric n = nb_gen n (sym_epsilon n);;       
    
