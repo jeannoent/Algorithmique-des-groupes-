@@ -89,48 +89,6 @@ let znz n (i,j) =
     	if i <= j then (j - i) mod n
               else (n + (j-i) mod n) mod n;;
               
-let time n k arr1 arr2 = 
-    let res = ref (Sys.time ())in
-    for _=0 to k-1 do
-        for i = 0 to n-1 do
-            for j=0 to n-1 do
-            let _ = Loi_gp_ab_new.abelian_epsilon arr1 (i,j)in ()
-            done;
-        done;
-    done;
-    res := Sys.time () -. !res;
-    print_string "Old time : "; print_float !res; print_newline ();
-    res := Sys.time ();
-    for _=0 to k-1 do
-        for i = 0 to n-1 do
-            for j=0 to n-1 do
-            let _ = Loi_gp_ab_new.abelian_epsilon arr2 (i,j) in ()
-            done;
-        done;
-    done;    
-    res := Sys.time () -. !res;
-    print_string "New time : "; print_float !res; print_newline ()
-
-
-
-let time2 ?k:(k=1) n arr = 
-    let res = ref (Sys.time ())in
-    for _=0 to k-1 do
-        let _ = nb_gen n (Loi_gp_ab.abelian_epsilon arr) in ()
-    done;
-    res := Sys.time () -. !res;
-    print_string "Old time : "; print_float !res; print_newline ();
-    res := Sys.time ();
-    for _=0 to k-1 do
-        let _ = nb_gen n (Loi_gp_ab_new.abelian_epsilon arr) in ()
-    done;
-    res := Sys.time () -. !res;
-    print_string "New time : "; print_float !res; print_newline ()
-
-
-
-let%test "bijection" = time2 32 [|2;2;2;2;2|];false
-
 
 let%test "bijection" = nb_gen 12 (znz 12) = nb_gen 12 (abelian_epsilon [|3;4|]) 
 
