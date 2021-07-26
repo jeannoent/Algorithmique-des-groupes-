@@ -64,3 +64,25 @@ let inv t =
     done;
     res;;
 
+
+(*fonction équivalent au système de liste par compréhension [i for i in L if f(i)] en python*)    
+let rec sort_out f l = match l with
+    |[] -> []
+    |h::r -> if f h then h::(sort_out f r) else (sort_out f r)
+
+let permToInt n t =
+    let l = ref [t.(n-1)] in
+    let decomp = ref [] in
+    for i=0 to n-1 do
+        let o = n-i-2 in
+        let first = sort_out (fun x -> x<t.(o)) !l  in
+        l := first@[t.(o)]@(sort_out (fun x -> x>t.(o)) !l );
+        decomp:= (List.length first)::!decomp
+    done;
+    List.rev !decomp
+
+    
+
+        
+        
+
