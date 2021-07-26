@@ -70,7 +70,10 @@ let rec sort_out f l = match l with
     |[] -> []
     |h::r -> if f h then h::(sort_out f r) else (sort_out f r)
 
-let permToInt n t =
+
+(*needs further testing*)
+let permToInt t =
+    let n = Array.length t in
     let l = ref [t.(n-1)] in
     let decomp = ref [] in
     for i=0 to n-1 do
@@ -81,7 +84,7 @@ let permToInt n t =
     done;
     List.rev !decomp
 
-    
+
 
         
         
