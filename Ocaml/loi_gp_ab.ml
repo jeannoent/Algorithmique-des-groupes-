@@ -1,20 +1,18 @@
 let processed_laws = ref ([||],[||])
 
-
-let decomp_prod n = 
-	let res = ref [] in
+let decomp_prod n =
+    let result = ref [] in 
     let rec aux acc_prec acc_left acc_list = 
-    	if acc_left = 1 then
-			res := (acc_list)::(!res)
-		else
-        	for i = acc_prec to acc_left do
-            	if n mod i = 0 then
-                	aux i (acc_left/i) (i::acc_list)
+        if acc_left = 1 then 
+            result := acc_list :: !result
+        else begin
+            for k = acc_prec to acc_left do
+                if acc_left mod k = 0 then
+                    aux k (acc_left / k) (k :: acc_list);
             done;
-    in
-    	aux 2 n [];
-        List.map (Array.of_list) !res;;
-
+        end
+    in aux 2 n [];
+    !result;;
 
 let lex_order arr t = 
 	let n = Array.length arr in
