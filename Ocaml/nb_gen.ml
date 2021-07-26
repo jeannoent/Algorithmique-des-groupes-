@@ -91,7 +91,6 @@ let znz n (i,j) =
               else (n + (j-i) mod n) mod n;;
               
 
-let%test "bijection" = nb_gen 12 (znz 12) = nb_gen 12 (abelian_epsilon [|3;4|]) 
 
 let abelian_gen arr = 
     let n = ref 1 and m = Array.length arr in

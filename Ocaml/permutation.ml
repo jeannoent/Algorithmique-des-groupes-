@@ -72,18 +72,29 @@ let rec sort_out f l = match l with
 
 
 (*needs further testing*)
-let permToInt t =
+let permToDecomp t =
     let n = Array.length t in
     let l = ref [t.(n-1)] in
     let decomp = ref [] in
-    for i=0 to n-1 do
+    for i=0 to n-2 do
         let o = n-i-2 in
         let first = sort_out (fun x -> x<t.(o)) !l  in
         l := first@[t.(o)]@(sort_out (fun x -> x>t.(o)) !l );
         decomp:= (List.length first)::!decomp
     done;
-    List.rev !decomp
+    List.rev !decomp;;
 
+let permToInt t =   
+    let dec = permToDecomp t in
+    let p = ref 1 and k = ref 0 in
+        let rec aux l i = match l with
+        |[] -> ()
+        |h::d -> p := (!p)*i;
+                 k := !k + h*(!p);
+                 aux d (i+1)
+        in
+            aux dec 1;
+    !k;;
 
 
         
