@@ -71,7 +71,6 @@ let rec sort_out f l = match l with
     |h::r -> if f h then h::(sort_out f r) else (sort_out f r)
 
 
-(*needs further testing*)
 let permToDecomp t =
     let n = Array.length t in
     let l = ref [t.(n-1)] in
