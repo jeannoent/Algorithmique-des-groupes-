@@ -55,3 +55,7 @@ let opbis t1 t2 arr =
 let abelian_epsilon arr (i,j) = lex_order arr (opbis (recip_order arr i) (recip_order arr j) arr);;
 
 
+let sort comp arr =
+    let res = Array.copy arr in
+    Array.sort comp res;
+    res;;
