@@ -12,7 +12,7 @@ let decomp_prod n =
             done;
         end
     in aux 2 n [];
-    !result;;
+    List.map Array.of_list !result;;
 
 let lex_order arr t = 
 	let n = Array.length arr in

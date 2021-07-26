@@ -1,4 +1,4 @@
-open Loi_gp_ab
+(*open Loi_gp_ab*)
 open Nb_gen
 (*open Permutation
 
@@ -30,4 +30,4 @@ let test_all_abelian n =
   in aux l
 
 
-  let%test_unit "all abelian" = print_list_array (decomp_prod 6)
+  let%test_unit "all abelian" = print_list_int  (List.map (fun x -> x mod 12) (all_abelian 12))
