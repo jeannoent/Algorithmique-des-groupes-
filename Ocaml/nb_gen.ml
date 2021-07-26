@@ -131,5 +131,26 @@ let time2 ?k:(k=1) n arr =
 
 let%test "bijection" = time2 32 [|2;2;2;2;2|];false
 
+
+let%test "bijection" = nb_gen 12 (znz 12) = nb_gen 12 (abelian_epsilon [|3;4|]) 
+
+let abelian_gen arr = 
+    let n = ref 1 and m = Array.length arr in
+    for i = 0 to m-1 do
+          n := arr.(i)*(!n)
+    done;
+    nb_gen !n (abelian_epsilon arr);;
+
+ let all_abelian n = 
+    let prod = (decomp_prod n) in
+    let res = ref [] in
+    let rec aux l = match l with
+    |[] -> ()
+    |arr::d -> res := ((abelian_gen arr))::(!res);
+               aux d;
+    in
+    aux prod
+    !res;;
+
         
    
