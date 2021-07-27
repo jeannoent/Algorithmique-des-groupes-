@@ -1,5 +1,5 @@
-(*open Loi_gp_ab*)
-open Nb_gen
+(*open Loi_gp_ab
+open Nb_gen*)
 (*open Permutation
 
 exception PermError
@@ -22,7 +22,7 @@ let%test "gen permutation" = print_string "Nb de part gen de S4: ";print_int (nb
 
 *)
 
-let test_all_abelian n =
+(*let test_all_abelian n =
   let l = all_abelian n in
   let rec aux = function
     |[] -> true
@@ -38,5 +38,5 @@ let rec notmap a l = match l with
 
   let%test "boucle abelien" = for i = 1 to 10 do
                                 let l = List.map (fun x -> x mod i) (all_abelian i) in
-                                notmap 0 l
+                                notmap 0 l*)
 

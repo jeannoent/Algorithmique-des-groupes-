@@ -4,24 +4,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Main</title>
-    <script type="text/javascript" src="main.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
+  <style>
+    h1
+    {
+      color :red;
+      text-align: center;
+    }
+  </style>
+  
   </head>
   <body>
-    <input type="text" name="resolve-input">
+    <h1>Parties génératrices </h1>
+    <input type="text" name="resolve-input" id = "ident">
+    <button onclick="on_add()"> Add </button> 
+    <button onclick="clearList()"> Clear</button>
+    <button onclick="compute()"> Compute</button>
+    <h4>Liste en cours : <h5 id="listencours"></h5></h4>
     <h4>Le resultat : <h5 id="result"></h5></h4>
+  
+  
   </body>
   <script type="text/javascript">
-    const input = document.querySelector('input');
-    const log = document.getElementById('result');
-
-    input.addEventListener('input', updateValue);
-
-    function updateValue(e) {
-      let value = parseInt(e.target.value)
-      if (value>=2){
-        log.textContent = ocamlcallback.resolve(value);
-      }
-      
+    var list = [];
+    updateList();
+    function on_add()  {
+      let input = document.getElementById("ident");
+      list.push(parseInt(input.value))
+      updateList();
+      let result = document.getElementById("result");
+      result.textContent = result.textContent + "\\( \\mathbb{Z}/ " + input.value + " \\mathbb{Z} \\) x";
+      MathJax.typeset();
+      input.value = "";
+    }
+    function clearList() {
+      list = [];
+      updateList();    
+    }
+    function updateList() {
+      let listencours = document.getElementById("listencours");
+      listencours.textContent = list;
+    }
+    function compute() {
+      let resultat = document.getElementById("result");
+      result.textContent = ocamlcallback.abelian(list);  
     }
   </script>
 </html>
