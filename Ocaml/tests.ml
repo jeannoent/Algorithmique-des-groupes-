@@ -31,3 +31,12 @@ let test_all_abelian n =
 
 
   let%test_unit "all abelian" = print_list_int  (List.map (fun x -> x mod 12) (all_abelian 12))
+
+let rec notmap a l = match l with
+|[] -> false
+|h::d -> (not (h = a))||(notmap a d);;
+
+  let%test "boucle abelien" = for i = 1 to 10 do
+                                let l = List.map (fun x -> x mod i) (all_abelian i) in
+                                notmap 0 l
+
