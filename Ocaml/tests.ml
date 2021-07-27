@@ -1,4 +1,4 @@
-open Loi_gp_ab
+(*open Loi_gp_ab
 open Nb_gen
 open Permutation
 
@@ -68,5 +68,5 @@ let test_mt n =
   let _= Nb_gen_mt.nb_gen n (znz n) in
   print_string "MT ON: "; print_float !res;print_newline ()
 
-let%test_unit "multi-threading" = test_mt 40
+let%test_unit "multi-threading" = test_mt 40 *)
 
