@@ -34,9 +34,21 @@ let test_all_abelian n =
 
 let rec notmap a l = match l with
 |[] -> false
-|h::d -> (not (h = a))||(notmap a d);;
+|h::d -> ((h = a))||(notmap a d);;
 
-  let%test "boucle abelien" = for i = 1 to 10 do
-                                let l = List.map (fun x -> x mod i) (all_abelian i) in
-                                notmap 0 l
+let print_bool = function
+  |true -> print_endline "True"
+  |false -> print_endline "False"
+
+let%test "boucle abelien" = 
+  let res = ref true in
+  for i = 1 to 10 do
+    print_int i;print_string ": ";
+    let l = List.map (fun x -> x mod i) (all_abelian i) in
+    let temp = notmap 0 l in
+    if not temp then res:= false;
+    print_bool temp
+    done;
+    !res
+
 
