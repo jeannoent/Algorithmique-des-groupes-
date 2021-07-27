@@ -1,10 +1,10 @@
-(*open Loi_gp_ab*)
+open Loi_gp_ab
 open Nb_gen
-(*open Permutation
+open Permutation
 
 exception PermError
 
-let%test "bijection" = nb_gen 12 (znz 12) = nb_gen 12 (abelian_epsilon [|3;4|]) 
+(*let%test "bijection" = nb_gen 12 (znz 12) = nb_gen 12 (abelian_epsilon [|3;4|])*)
 
 let perm_test n = 
   try
@@ -15,12 +15,10 @@ let perm_test n =
   with _ -> false
 
 
-let%test "permutation" =  perm_test 5
+(*let%test "permutation" =  perm_test 5*)
 
 
-let%test "gen permutation" = print_string "Nb de part gen de S4: ";print_int (nb_gen (fac 4) (sym_epsilon 4)) ; false
-
-*)
+(*let%test "gen permutation" = print_string "Nb de part gen de S4: ";print_int (nb_gen (fac 4) (sym_epsilon 4)) ; false*)
 
 let test_all_abelian n =
   let l = all_abelian n in
@@ -30,7 +28,7 @@ let test_all_abelian n =
   in aux l
 
 
-  let%test_unit "all abelian" = print_list_int  (List.map (fun x -> x mod 12) (all_abelian 12))
+(*let%test_unit "all abelian" = print_list_int  (List.map (fun x -> x mod 12) (all_abelian 12))*)
 
 let rec notmap a l = match l with
 |[] -> false
@@ -40,15 +38,35 @@ let print_bool = function
   |true -> print_endline "True"
   |false -> print_endline "False"
 
-let%test "boucle abelien" = 
+(*let%test "boucle abelien" = 
   let res = ref true in
-  for i = 1 to 10 do
+  for i = 41 to 50 do
     print_int i;print_string ": ";
     let l = List.map (fun x -> x mod i) (all_abelian i) in
     let temp = notmap 0 l in
     if not temp then res:= false;
-    print_bool temp
+  print_bool temp
     done;
-    !res
+    !res*)
 
+let nb_groups n = 
+  let res =  ref 0 in
+  for i=1 to n do    
+    res:= !res + List.length (decomp_prod i)
+  done;
+  !res;;
+
+
+(*let%test_unit "nb_groupes" = print_int (nb_groups 40)  *)
+
+let test_mt n =
+  let res = ref (Sys.time ()) in
+  let _= Nb_gen.nb_gen n (znz n) in
+  res:=Sys.time () -. !res;
+  print_string "MT OFF: "; print_float !res;print_newline ();
+  res := Sys.time ();
+  let _= Nb_gen_mt.nb_gen n (znz n) in
+  print_string "MT ON: "; print_float !res;print_newline ()
+
+let%test_unit "multi-threading" = test_mt 40
 
