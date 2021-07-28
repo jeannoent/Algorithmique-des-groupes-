@@ -16,17 +16,20 @@
       color :red;
       text-align: center;
     }
+  h5{
+    display : inline;
+  }
   </style>
   
   </head>
   <body>
     <h1>Parties génératrices </h1>
     <input type="text" name="resolve-input" id = "ident">
-    <button onclick="on_add()"> Add </button> 
+    <button onclick="on_add()" > Add </button> 
     <button onclick="clearList()"> Clear</button>
     <button onclick="compute()"> Compute</button>
     <h4>Liste en cours : <h5 id="listencours"></h5></h4>
-    <h4>Le resultat : <h5 id="result"></h5></h4>
+    <h4>Le resultat : <h5 id="latex">  </h5> = <h5 id="result"></h5></h4>
   
   
   </body>
@@ -34,22 +37,19 @@
     var list = [];
     var result = "";
     updateList();
+    updatelatex();
     function on_add()  {
       let input = document.getElementById("ident");
       list.push(parseInt(input.value))
       updateList();
-      /*
-      let result = document.getElementById("result");
-      result.textContent = result.textContent + "\\( \\mathbb{Z}/ " + input.value + " \\mathbb{Z} \\) ";
-      MathJax.typeset();
-      
-      */
+      updatelatex();
       input.value = "";
     }
     function clearList() {
       list = [];
       result = "";
       updateList();
+      updatelatex();
       
 
 
@@ -61,6 +61,22 @@
     function compute() {
       let resultat = document.getElementById("result");
       resultat.textContent = ocamlcallback.abelian(list);  
+    }
+    function updatelatex() {
+      let result = document.getElementById("latex");
+      let temporaire = "\\( \\pi [ ";
+      for (let index = 0; index < list.length; index++) {
+        if (index == list.length - 1)
+        {
+          temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} ";
+        }
+        else{
+        temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} \\times ";
+        }
+      }
+      temporaire = temporaire +  "] \\)";
+      result.textContent = temporaire;
+      MathJax.typeset();
     }
   </script>
 </html>
