@@ -8,7 +8,13 @@
   (targets main.js)
   (action
     (run %{bin:js_of_ocaml}
-         --source-map %{dep:main.bc} -o %{targets} --pretty)))
+         --source-map
+         --disable genprim
+         +base/runtime.js 
+         +nat.js
+         %{dep:main.bc} 
+         -o %{targets} 
+         --pretty)))
 
 (alias
   (name default)
