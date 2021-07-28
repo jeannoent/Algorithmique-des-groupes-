@@ -24,22 +24,49 @@
   </head>
   <body>
     <h1>Parties génératrices </h1>
-    <input type="text" name="resolve-input" id = "ident">
-    <button onclick="on_add()" > Add </button> 
-    <button onclick="clearList()"> Clear</button>
-    <button onclick="compute()"> Compute</button>
-    <h4>Liste en cours : <h5 id="listencours"></h5></h4>
-    <h4>Le resultat : <h5 id="latex">  </h5> = <h5 id="result"></h5></h4>
-  
-  
+
+    <label for="group">Type de groupe : </label>
+    <select name="gp_type" id="group" onchange="change_pannel()">
+        <option value="abelian">Abélien</option>
+        <option value="symetric">Symétrique</option>
+        <option value="cyclic">Cyclique</option>
+    </select>
+
+    <br>  
+    </br>
+
+    <div id = "abelian">
+      <input type="text" name="resolve-input" id = "abelian_input">
+      <button onclick="on_add()" > Add </button> 
+      <button onclick="clearList()"> Clear</button>
+      <button onclick="compute_abelian()"> Compute</button>
+      <h4>Liste en cours : <h5 id="listencours"></h5></h4>
+      <h4>Le resultat : <h5 id="abelian_latex">  </h5> = <h5 id="abelian_result"></h5></h4>
+    </div>
+    
+    <div id = "symetric">
+      <input type="text" name="resolve-input" id = "symetric_input">
+      <button onclick="compute_symetric()"> Compute</button>
+      <h4>Le resultat : <h5 id="symetric_latex">  </h5> = <h5 id="symetric_result"></h5></h4>
+
+    </div>
+
+    <div id = "cyclic">
+      <input type="text" name="resolve-input" id = "cyclic_input">
+      <button onclick="compute_cyclic()"> Compute</button>
+      <h4>Le resultat : <h5 id="cyclic_latex">  </h5> = <h5 id="cyclic_result"></h5></h4>
+    </div>
+
   </body>
   <script type="text/javascript">
+    document.getElementById("cyclic").style.display = "none";
+    document.getElementById("symetric").style.display = "none";
     var list = [];
     var result = "";
     updateList();
     updatelatex();
     function on_add()  {
-      let input = document.getElementById("ident");
+      let input = document.getElementById("abelian_input");
       list.push(parseInt(input.value))
       updateList();
       updatelatex();
@@ -51,19 +78,41 @@
       updateList();
       updatelatex();
       
-
+     
 
     }
     function updateList() {
       let listencours = document.getElementById("listencours");
       listencours.textContent = list;
     }
-    function compute() {
-      let resultat = document.getElementById("result");
+    function compute_abelian() {
+      let resultat = document.getElementById("abelian_result");
       resultat.textContent = ocamlcallback.abelian(list);  
     }
+    function compute_cyclic() {
+      let resultat = document.getElementById("cyclic_result");
+      let input = document.getElementById("cyclic_input");
+      let contenu = parseInt(input.value);
+      let latex = document.getElementById("cyclic_latex");
+      latex.textContent = "\\( \\pi[\\mathbb{Z} / " + input.value + " \\mathbb{Z} ]  \\)";
+      MathJax.typeset();
+      resultat.textContent = ocamlcallback.cyclic(contenu);
+      
+      
+    }
+    function compute_symetric() {
+      let resultat = document.getElementById("symetric_result");
+      let input = document.getElementById("symetric_input");
+      let contenu = parseInt(input.value);
+      let latex = document.getElementById("symetric_latex");
+      latex.textContent = "\\( \\pi[ \\mathfrak{S}_" + input.value + " ]  \\)";
+      MathJax.typeset();
+      resultat.textContent = ocamlcallback.symetric(contenu);
+      
+    }
+
     function updatelatex() {
-      let result = document.getElementById("latex");
+      let result = document.getElementById("abelian_latex");
       let temporaire = "\\( \\pi [ ";
       for (let index = 0; index < list.length; index++) {
         if (index == list.length - 1)
@@ -78,5 +127,29 @@
       result.textContent = temporaire;
       MathJax.typeset();
     }
+
+  function change_pannel() 
+  {
+    let groupe = document.getElementById("group");
+    if (groupe.value == "abelian" ) 
+    {
+      document.getElementById("abelian").style.display = "block";
+      document.getElementById("cyclic").style.display = "none";
+      document.getElementById("symetric").style.display = "none";
+    }
+    if (groupe.value == "cyclic" ) 
+    {
+      document.getElementById("cyclic").style.display = "block";
+      document.getElementById("abelian").style.display = "none";
+      document.getElementById("symetric").style.display = "none";
+    }
+    if (groupe.value == "symetric" ) 
+    {
+      document.getElementById("symetric").style.display = "block";
+      document.getElementById("cyclic").style.display = "none";
+      document.getElementById("abelian").style.display = "none";
+    }
+  }
+  
   </script>
 </html>
