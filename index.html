@@ -31,19 +31,24 @@
   </body>
   <script type="text/javascript">
     var list = [];
+    var result = "";
     updateList();
     function on_add()  {
       let input = document.getElementById("ident");
       list.push(parseInt(input.value))
       updateList();
       let result = document.getElementById("result");
-      result.textContent = result.textContent + "\\( \\mathbb{Z}/ " + input.value + " \\mathbb{Z} \\) x";
+      result.textContent = result.textContent + "\\( \\mathbb{Z}/ " + input.value + " \\mathbb{Z} \\) ";
       MathJax.typeset();
       input.value = "";
     }
     function clearList() {
       list = [];
-      updateList();    
+      result = "";
+      updateList();
+      
+
+
     }
     function updateList() {
       let listencours = document.getElementById("listencours");
