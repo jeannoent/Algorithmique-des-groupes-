@@ -1,6 +1,6 @@
 (executables
   (names main)
-  (libraries js_of_ocaml js_of_ocaml-lwt ocaml)
+  (libraries js_of_ocaml js_of_ocaml-lwt lib_gen)
   (modes byte)
   (preprocess (pps js_of_ocaml-ppx)))
 
@@ -10,7 +10,7 @@
     (run %{bin:js_of_ocaml}
          --source-map
          --disable genprim
-         +base/runtime.js 
+         +base\runtime.js 
          +nat.js
          %{dep:main.bc} 
          -o %{targets} 

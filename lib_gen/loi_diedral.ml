@@ -14,9 +14,9 @@ let prod_semi_dir n (h1,k1) (h2,k2) =
 let prod_inv n (h,k) = (action n k (opp_id n h),k);;
 
 
-let lexical_order n (i,j) = 2*i + j;;
-let recip_order n k = (k/2,k mod 2);;
+let lexical_order (i,j) = 2*i + j;;
+let recip_order k = (k/2,k mod 2);;
 
-let diedral_op n (i,j) = lexical_order n (prod_semi_dir n (recip_order n i) (recip_order n j) );;
+let diedral_op n (i,j) = lexical_order (prod_semi_dir n (recip_order i) (recip_order j) );;
 
-let semi_direct_epsilon n (i,j) = lexical_order n (prod_semi_dir n (recip_order n j) (prod_inv n (recip_order n i)) );;
+let semi_direct_epsilon n (i,j) = lexical_order (prod_semi_dir n (recip_order j) (prod_inv n (recip_order i)) );;
