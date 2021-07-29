@@ -146,6 +146,6 @@ let abelian_gen_mod arr =
     !res;;
 
 
-let pi_symetric n = nb_gen n (sym_epsilon n);;       
+let pi_symetric n = nb_gen (fac n) (sym_epsilon n);;      
   
 let pi_cyclic n = nb_gen n (znz n);;
