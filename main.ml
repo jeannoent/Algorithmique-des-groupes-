@@ -10,4 +10,6 @@ let _ =
             (fun _ x -> pi_cyclic(x))
         val symetric = Js.wrap_meth_callback
             (fun _ x -> pi_symetric(x))
+        val diedral = Js.wrap_meth_callback
+            (fun _ x -> pi_diedral(x))
       end);

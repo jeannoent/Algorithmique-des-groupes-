@@ -30,6 +30,7 @@
         <option value="abelian">Abélien</option>
         <option value="symetric">Symétrique</option>
         <option value="cyclic">Cyclique</option>
+        <option value="diedral"> Diédral </option>
     </select>
 
     <br>  
@@ -57,6 +58,13 @@
       <h4>Le resultat : <h5 id="cyclic_latex">  </h5> = <h5 id="cyclic_result"></h5></h4>
     </div>
     
+    <div id = "diedral">
+      <input type="text" name="resolve-input" id = "cyclic_input">
+      <button onclick="compute_diedral()"> Compute</button>
+      <h4>Le resultat : <h5 id="diedral_latex">  </h5> = <h5 id="diedral_result"></h5></h4>
+    </div>
+
+
     <br> 
     </br>
 
@@ -86,6 +94,7 @@
   <script type="text/javascript">
     document.getElementById("cyclic").style.display = "none";
     document.getElementById("symetric").style.display = "none";
+    document.getElementById("diedral").style.display = "none";
     var list = [];
     var result = "";
     updateList();
@@ -136,6 +145,16 @@
       
     }
 
+    function compute_diedral() {
+      let resultat = document.getElementById("diedral_result");
+      let input = document.getElementById("diedral_input");
+      let contenu = parseInt(input.value);
+      let latex = document.getElementById("diedral_latex");
+      latex.textContent = "\\( \\pi[ D_{" + input.value + "} ]  \\)";
+      MathJax.typeset();
+      resultat.textContent = ocamlcallback.diedral(contenu);
+
+    }
     function updatelatex() {
       let result = document.getElementById("abelian_latex");
       let temporaire = "\\( \\pi [ ";
@@ -161,19 +180,27 @@
       document.getElementById("abelian").style.display = "block";
       document.getElementById("cyclic").style.display = "none";
       document.getElementById("symetric").style.display = "none";
+      document.getElementById("diedral").style.display = "nonce";
     }
     if (groupe.value == "cyclic" ) 
     {
       document.getElementById("cyclic").style.display = "block";
       document.getElementById("abelian").style.display = "none";
       document.getElementById("symetric").style.display = "none";
+      document.getElementById("diedral").style.display = "nonce";
     }
     if (groupe.value == "symetric" ) 
     {
       document.getElementById("symetric").style.display = "block";
       document.getElementById("cyclic").style.display = "none";
       document.getElementById("abelian").style.display = "none";
+      document.getElementById("diedral").style.display = "nonce";
     }
+    if (groupe.value == "diedral" )
+    document.getElementById("diedral").style.display = "block";
+      document.getElementById("symetric").style.display = "none";
+      document.getElementById("cyclic").style.display = "none";
+      document.getElementById("abelian").style.display = "none";
   }
   
   </script>
