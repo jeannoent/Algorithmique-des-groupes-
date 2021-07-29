@@ -1,7 +1,10 @@
+open Loi_diedral
 open Loi_gp_ab
 open Permutation
+open Big_int
 
-type ggraphe = int * int list * ((int*int) -> int);;
+
+type ggraphe = int * int list * ((int*int) -> int)
 
 
 let print_list_int l =
@@ -10,7 +13,7 @@ let print_list_int l =
     	|[] -> print_endline "]"
         |[x] -> print_int x; print_endline "]"
         |x::l -> print_int x;print_string ";"; aux l 
-     in aux l;;   
+     in aux l
 
 let print_array arr = 
     let n = Array.length arr in
@@ -27,7 +30,7 @@ let print_list_array l =
     	|[] -> print_endline "]"
         |[x] -> print_array x; print_endline "]"
         |x::l -> print_array x;print_string ";"; aux l 
-     in aux l;;   
+     in aux l
 
 
 (*construit un table de hash contenant 
@@ -37,7 +40,7 @@ let constr_hash n =
     for i=0 to n-1 do
     	Hashtbl.add res i ()
     done;
-    res;;
+    res
 
 (*vérifie si s génère le groupe de loi e à n éléments*)
 let est_gen ((g,s,e):ggraphe) =
@@ -57,7 +60,7 @@ let est_gen ((g,s,e):ggraphe) =
                 )
     	done;
 	done;
-    Hashtbl.length t = 0;;
+    Hashtbl.length t = 0
     
     
 type smol_tree = (int list)* int list list;;
@@ -68,17 +71,19 @@ let next_subtree l max =
     for i=min+1 to max-1 do
     	res:= (i::l) :: !res
     done;
-    !res;;
+    !res
     
 (*retourne le nombre de parties génératrices d'un goupe d'ordre n de loi e*)
+
 let nb_gen n e  =
-	let res= ref 0 in
+	let res= ref zero_big_int in
     let rec aux l=
     	if est_gen (n,l,e) then
-        	res:= !res + (1 lsl (n-1-List.hd l))
+        	res:= add_big_int !res (power_int_positive_int 2 (n-1-List.hd l))
         else List.iter aux (next_subtree l n)
     in aux [];
-    !res;;
+    let modn = snd (quomod_big_int !res (big_int_of_int n)) in
+    (string_of_big_int !res,string_of_big_int modn)    
     
 
 (*returne a^n mod m*)    
@@ -90,23 +95,11 @@ let rec pow_mod a n m = match n with
     (b * b mod m)* (if n mod 2 = 0 then 1 else a mod m ) mod m;;
     
 
-(*retourne nb_gen mod n, calcul plus long mais 
-permet d'éviter (en général) les overflows dans les cas où 
-n>31 où n>63 selon l'architecture, où la valeur de nb_gen ne serait pas correcte*)
-let nb_gen_mod n e = 
-    let res= ref 0 in
-    let rec aux l=
-    	if est_gen (n,l,e) then
-        	res:= (!res mod n) + (pow_mod 2 (n-1-List.hd l) n) mod n 
-        else List.iter aux (next_subtree l n)
-    in aux [];
-    !res mod n;;
-
-
-let znz n (i,j) = 
-    	if i <= j then (j - i) mod n
-              else (n + (j-i) mod n) mod n;;
-              
+            
+let znz n (i,j) =                 
+    	if i <= j then (j - i) mod n                  
+              else (n + (j-i) mod n) mod n;;                  
+                        
 
 
 let abelian_gen arr = 
@@ -115,35 +108,6 @@ let abelian_gen arr =
           n := arr.(i)*(!n)
     done;
     nb_gen !n (abelian_epsilon arr);;
-
-let abelian_gen_mod arr = 
-    let n = ref 1 and m = Array.length arr in
-    for i = 0 to m-1 do
-          n := arr.(i)*(!n)
-    done;
-    nb_gen_mod !n (abelian_epsilon arr);;    
-
- let all_abelian n = 
-    let prod = (decomp_prod n) in
-    let res = ref [] in
-    let rec aux l = match l with
-    |[] -> ()
-    |arr::d -> res := ((abelian_gen arr))::(!res);
-               aux d;
-    in
-    aux prod;
-    !res;;
-
- let all_not_abelian n = 
-    let prod = (decomp_prod n) in
-    let res = ref [] in
-    let rec aux l = match l with
-    |[] -> ()
-    |arr::d -> if abelian_gen_mod arr <> 0 then( print_int (abelian_gen_mod arr); print_newline ());res := (arr)::(!res);
-               aux d;
-    in
-    aux prod;
-    !res;;
 
 
 let pi_symetric n = nb_gen (fac n) (sym_epsilon n);;       

@@ -1,6 +1,6 @@
 (library
- (name ocaml)
- (libraries base stdlib)
+ (name lib_gen)
+ (libraries base stdlib num)
  (inline_tests)
  (preprocess (pps ppx_inline_test))
 )

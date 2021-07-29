@@ -1,4 +1,4 @@
-open Ocaml.Nb_gen
+open Lib_gen.Nb_gen
 open Js_of_ocaml
 
 (* Gestion callback *)
