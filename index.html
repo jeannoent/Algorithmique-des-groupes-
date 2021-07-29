@@ -56,7 +56,32 @@
       <button onclick="compute_cyclic()"> Compute</button>
       <h4>Le resultat : <h5 id="cyclic_latex">  </h5> = <h5 id="cyclic_result"></h5></h4>
     </div>
+    
+    <br> 
+    </br>
 
+    <h5> 
+      Ce calculateur permet de connaître la quantité de parties génératrices de certains groupes finis d'ordre raisonnable.
+    </h5>
+
+    <br>
+    </br>  
+    
+    <h5>  
+      Il permet notamment de connaître le nombre de parties génératrices de n'importe quel groupe abélien d'ordre inférieur à 30, des premiers groupes symétriques, des premiers groupes alternés, et des petits groupes diédraux.
+      
+    <br>
+    </br>  
+    
+      Au-delà de 30, l'algorithme va stackoverflow et rendre des résultat négatifs : c'est regrettable.
+    
+    <br>
+    </br>
+
+      Pour connaître le nombre de parties génératrices d'un groupe abélien quelconque, il faut d'abord vous prémunir de sa décomposition en produits de groupes cycliques. Ensuite il vous suffira d'entrer dans un ordre quelconque, un par un les coefficients de la décomposition, d'appuyer sur «push», puis «compute» une fois toutes les informations transmises.
+      En dessous du résultat vous pourrez obtenir la division euclidienne de la quantité obtenu, par l'ordre du groupe demandé.
+
+    </h5>
   </body>
   <script type="text/javascript">
     document.getElementById("cyclic").style.display = "none";
