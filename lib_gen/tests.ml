@@ -1,6 +1,6 @@
-(*open Loi_gp_ab*)
+(*open Loi_gp_ab
 open Nb_gen
-(*open Permutation*)
+open Permutation*)
 
 (*exception PermError*)
 
@@ -70,4 +70,5 @@ let test_mt n =
 
 let%test_unit "multi-threading" = test_mt 40 *)
 
-let%test_unit "big : " = print_string "nb gen znz 31: " ; print_string (Big_int.string_of_big_int (nb_gen_big 31 (znz 31)))
+(*let%test_unit "big : " = print_string "nb gen znz 31: " ; print_string (Big_int.string_of_big_int (nb_gen_big 31 (znz 31)))*)
+
