@@ -205,7 +205,7 @@
     function update_diedral_latex() {
         let input = document.getElementById("diedral_input");
         let latex = document.getElementById("diedral_latex");
-        latex.textContent = "\\( \\pi[ D_{" + input.value + "} ]  \\)";
+        latex.textContent = "\\( \\pi[ D_{" + (2*parseInt(input.value)) + "} ]  \\)";
         MathJax.typeset();
     }
 
