@@ -110,7 +110,7 @@
             <div class="indeterminate"></div>
         </div>
 
-        <h4 class="center rsh4"><span id="diedral_latex">\( \pi[ D_{k}] \)</span> = <span
+        <h4 class="center rsh4"><span id="diedral_latex">\( \pi[ D_{2k}] \)</span> = <span
                 id="diedral_result"></span></h4>
     </div>
 </div>
@@ -171,7 +171,7 @@
             case "diedral":
                 input = document.getElementById("diedral_input");
                 contenu = parseInt(input.value);
-                computed = ocamlcallback.diedral(contenu);
+                computed = ocamlcallback.diedral(2*contenu);
                 break
         }
         loader_change(type, false);
