@@ -11,7 +11,7 @@ let print_list_int l =
 	print_string "[";
     let rec aux  = function
     	|[] -> print_endline "]"
-        |[x] -> print_int x; print_endline "]"
+        |[x] -> print_int x; print_string "]"
         |x::l -> print_int x;print_string ";"; aux l 
      in aux l
 
@@ -66,21 +66,28 @@ let est_gen ((g,s,e):ggraphe) =
 type smol_tree = (int list)* int list list;;
 
 let next_subtree l max =
-	let min = try List.hd l with _ -> -1 in
+	let min = try List.hd l with _ -> max in
     let res = ref [] in
-    for i=min+1 to max-1 do
+    for i=0 to min-1 do
     	res:= (i::l) :: !res
     done;
     !res
     
 (*retourne le nombre de parties génératrices d'un goupe d'ordre n de loi e*)
 
-let nb_gen n e  =
+let nb_gen ?print:(p=false) n e  =
 	let res= ref zero_big_int in
     let rec aux l=
+        if p then print_list_int l;
     	if est_gen (n,l,e) then
-        	res:= add_big_int !res (power_int_positive_int 2 (n-1-List.hd l))
-        else List.iter aux (next_subtree l n)
+            (
+            print_endline "V";
+        	res:= add_big_int !res (power_int_positive_int 2 (List.hd l))
+            )
+        else (
+            print_endline "F";
+            List.iter aux (next_subtree l n)
+            )   
     in aux [];
     let modn = (quomod_big_int !res (big_int_of_int n)) in
     (string_of_big_int !res,string_of_big_int (fst modn),string_of_big_int (snd modn))    

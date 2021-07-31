@@ -1,6 +1,6 @@
-(*open Loi_gp_ab
+(*open Loi_gp_ab*)
 open Nb_gen
-open Permutation*)
+(*open Permutation*)
 
 (*exception PermError*)
 
@@ -72,3 +72,6 @@ let%test_unit "multi-threading" = test_mt 40 *)
 
 (*let%test_unit "big : " = print_string "nb gen znz 31: " ; print_string (Big_int.string_of_big_int (nb_gen_big 31 (znz 31)))*)
 
+let fst3 (a,_,_) = a
+
+let%test_unit "diédral" = print_string "nb gen D 60: " ; print_string  (fst3 (nb_gen ~print:true 60 (Loi_diedral.diedral_op 60)))
