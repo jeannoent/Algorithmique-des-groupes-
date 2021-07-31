@@ -14,10 +14,10 @@ let died_ext n (h1,k1) (h2,k2) = semi_dir (n/2) (a n) (h1,k1) (h2,k2);;
 let lexical_order (i,j) = 2*i + j;;
 let recip_order k = (k/2,k mod 2);;
  
-let died_op n (i,j) = lexical_order n (died_ext n (recip_order n i) (recip_order n j));;
+let died_op n (i,j) = lexical_order (died_ext n (recip_order i) (recip_order j));;
 
 let inv n (h,k) = (a (n/2) k (opp (n/2) h),k);;
-let transinv n i = lexical_order n (inv n (recip_order n i));;
+let transinv n i = lexical_order (inv n (recip_order i));;
 
 let died_epsilon n (i,j) = let k = transinv n i in died_op n (j,k);;
 

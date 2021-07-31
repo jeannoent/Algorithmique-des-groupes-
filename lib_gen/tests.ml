@@ -74,4 +74,4 @@ let%test_unit "multi-threading" = test_mt 40 *)
 
 let fst3 (a,_,_) = a
 
-let%test_unit "diédral" = print_string "nb gen D 60: " ; print_string  (fst3 (nb_gen ~print:true 60 (Loi_diedral.diedral_op 60)))
+let%test_unit "diédral" = print_string "nb gen D 20: " ; print_string  (fst3 (nb_gen ~print:true 20 (Loi_diedral.died_op 20)))
