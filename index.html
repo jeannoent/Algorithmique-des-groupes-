@@ -45,6 +45,14 @@
         .progress .indeterminate {
             background-color: #03a9f4;
         }
+
+        .switch label input[type=checkbox]:checked+.lever:after {
+            background-color: #03a9f4;
+        }
+
+        .switch label input[type=checkbox]:checked+.lever {
+            background-color: #68cefd;
+        }
     </style>
 </head>
 <body>
@@ -94,7 +102,16 @@
 
         <h4 class="center rsh4"><span id="abelian_latex">\( \pi[\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z} ]  \)</span>
             = <span id="abelian_result"></span></h4>
-
+        <h5>Graphes :
+            <div class="switch">
+                <label>
+                    Off
+                    <input type="checkbox" id="abelian_graphe_checkbox">
+                    <span class="lever"></span>
+                    On
+                </label>
+            </div>
+        </h5>
         <div class="center">
             <canvas id="abelian_graph" width="800" height="600" />
         </div>
@@ -120,6 +137,16 @@
 
         <h4 class="center rsh4"><span id="diedral_latex">\( \pi[ D_{2k}] \)</span> = <span
                 id="diedral_result"></span></h4>
+        <h5>Graphes :
+            <div class="switch">
+                <label>
+                    Off
+                    <input type="checkbox" id="diedral_graphe_checkbox">
+                    <span class="lever"></span>
+                    On
+                </label>
+            </div>
+        </h5>
         <div class="center">
             <canvas id="diedral_graph" width="800" height="600" />
         </div>
@@ -144,6 +171,16 @@
         </div>
         <h4 class="center rsh4"><span id="symetric_latex">\( \pi[ \mathfrak{S}_{k} ] \)</span> = <span
                 id="symetric_result"></span></h4>
+        <h5>Graphes :
+            <div class="switch">
+                <label>
+                    Off
+                    <input type="checkbox" id="symetric_graphe_checkbox">
+                    <span class="lever"></span>
+                    On
+                </label>
+            </div>
+        </h5>
         <div class="center">
             <canvas id="symetric_graph" width="800" height="600" />
         </div>
