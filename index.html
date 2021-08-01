@@ -216,17 +216,30 @@
         let computed, input, contenu;
         switch (type) {
             case "abelian":
-                computed = ocamlcallback.abelian(list);
+                if (document.getElementById("abelian_graphe_checkbox").checked){
+                    computed = ocamlcallback.abeliang(list);
+                } else {
+                    computed = ocamlcallback.abelian(list);
+                }
                 break
             case "symetric":
                 input = document.getElementById("symetric_input");
                 contenu = parseInt(input.value);
-                computed = ocamlcallback.symetric(contenu);
+                if (document.getElementById("symetric_graphe_checkbox").checked){
+                    computed = ocamlcallback.symetricg(contenu);
+                } else {
+                    computed = ocamlcallback.symetric(contenu);
+                }
                 break
             case "diedral":
                 input = document.getElementById("diedral_input");
                 contenu = parseInt(input.value);
-                computed = ocamlcallback.diedral(2*contenu);
+                if (document.getElementById("diedral_graphe_checkbox").checked){
+                    computed = ocamlcallback.diedralg(2*contenu);
+                } else {
+                    computed = ocamlcallback.diedral(2*contenu);
+                }
+
                 break
         }
         loader_change(type, false);
