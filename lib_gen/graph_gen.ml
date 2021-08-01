@@ -37,7 +37,7 @@ let str_nodes l =
 let str_edges l =   
   let rec aux li = match li with
       |[] -> "]"
-      |[x] -> (str_nodes x)^"\"]"
+      |[x] -> (str_nodes x)^"]"
       |h::l -> (str_nodes h)^","^(aux l)
   in "["^(aux l)
 
