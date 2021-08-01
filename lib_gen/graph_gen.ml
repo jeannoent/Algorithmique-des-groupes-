@@ -1,5 +1,9 @@
-open Big_int
+open Loi_diedral
+open Loi_gp_ab
+open Permutation
 open Nb_gen
+open Big_int
+
 let str_set_oflist l =
   let rec aux li = match li with
       |[] -> "}"
@@ -67,6 +71,18 @@ let nb_gen_draw n e  =
 
 
 
+let abelian_gen_graph arr = 
+    let n = ref 1 and m = Array.length arr in
+    for i = 0 to m-1 do
+          n := arr.(i)*(!n)
+    done;
+    nb_gen_draw !n (abelian_epsilon arr);;
+
+let pi_symetric_graph n = nb_gen_draw (fac n) (sym_epsilon n);;       
+  
+let pi_cyclic_graph n = nb_gen_draw n (znz n);;
+
+let pi_diedral_graph n = nb_gen_draw n (died_epsilon n);;
 
 
 
