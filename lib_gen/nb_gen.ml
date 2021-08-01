@@ -90,7 +90,8 @@ let nb_gen ?print:(p=false) n e  =
             )   
     in aux [];
     let modn = (quomod_big_int !res (big_int_of_int n)) in
-    (string_of_big_int !res,string_of_big_int (fst modn),string_of_big_int (snd modn))    
+    ((string_of_big_int !res,string_of_big_int (fst modn),string_of_big_int (snd modn)),
+    "{\"nodes\" : [],\"edges\" : []}")   
     
 
 
