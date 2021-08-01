@@ -14,6 +14,9 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/springy/2.8.0/springy.min.js" integrity="sha512-DUvkGwYblOMa3MuO3lyvAXRj3ckZUA0ahk50T5/Yxm7Zubm3NVPJ7o2g5cxMHi41wk07V1/KnfsAslx/HUgiTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/springy/2.8.0/springyui.js" integrity="sha512-XhBbTRC1qBOjrgsYat6ZQ9X97SnR6SL1K+HDOllCWMkDmv6B/v9lnbhGEurP7QuQVbnAKp3XdN65OXXtyU7XUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .brand-logo {
             margin-left: 1vw;
@@ -54,6 +57,7 @@
             <li class="tab"><a class="active" href="#abelian">Abélien</a></li>
             <li class="tab"><a href="#symetric">Symétrique</a></li>
             <li class="tab"><a href="#diedral">Diédral</a></li>
+            <li class="tab"><a href="#apropos">A propos</a></li>
         </ul>
     </div>
 </nav>
@@ -90,6 +94,10 @@
 
         <h4 class="center rsh4"><span id="abelian_latex">\( \pi[\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z} ]  \)</span>
             = <span id="abelian_result"></span></h4>
+
+        <div class="center">
+            <canvas id="abelian_graph" width="800" height="600" />
+        </div>
     </div>
 </div>
 <div id="diedral" class="col s12">
@@ -112,6 +120,9 @@
 
         <h4 class="center rsh4"><span id="diedral_latex">\( \pi[ D_{2k}] \)</span> = <span
                 id="diedral_result"></span></h4>
+        <div class="center">
+            <canvas id="diedral_graph" width="800" height="600" />
+        </div>
     </div>
 </div>
 <div id="symetric" class="col s12">
@@ -133,9 +144,16 @@
         </div>
         <h4 class="center rsh4"><span id="symetric_latex">\( \pi[ \mathfrak{S}_{k} ] \)</span> = <span
                 id="symetric_result"></span></h4>
+        <div class="center">
+            <canvas id="symetric_graph" width="800" height="600" />
+        </div>
     </div>
 </div>
-
+<div id="apropos" class="col s12">
+    <div class="container">
+        <h4 class="center section-title">A propos</h4>
+    </div>
+</div>
 
 </body>
 <script type="text/javascript">
@@ -176,6 +194,7 @@
         }
         loader_change(type, false);
         resultat.textContent = "\\("+computed[1][1].c+"["+computed[1][3].c+"]\\)";
+        generate_graphe(type, computed[2].c);
         MathJax.typeset();
     }
 
@@ -225,6 +244,18 @@
             bouton.classList.remove("disabled");
             loader.style.display = "none";
         }
+    }
+
+    function generate_graphe(type, content) {
+        graphJSON = JSON.parse(content);
+        // Replace with function
+        var graph = new Springy.Graph();
+        graph.loadJSON(graphJSON);
+        jQuery(function(){
+            var springy = jQuery('#'+type+'_graph').springy({
+                graph: graph
+            });
+        });
     }
 
 </script>
