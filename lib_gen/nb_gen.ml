@@ -81,17 +81,18 @@ let nb_gen ?print:(p=false) n e  =
         if p then print_list_int l;
     	if est_gen (n,l,e) then
             (
-            print_endline "V";
+            if p then print_endline "V";
         	res:= add_big_int !res (power_int_positive_int 2 (List.hd l))
             )
         else (
-            print_endline "F";
+            if p then print_endline "F";
             List.iter aux (next_subtree l n)
             )   
     in aux [];
     let modn = (quomod_big_int !res (big_int_of_int n)) in
     (string_of_big_int !res,string_of_big_int (fst modn),string_of_big_int (snd modn))    
     
+
 
 (*returne a^n mod m*)    
 let rec pow_mod a n m = match n with
