@@ -3,6 +3,7 @@ open Loi_gp_ab
 open Permutation
 open Nb_gen
 open Big_int
+open Loi_star
 
 let str_set_oflist l =
   let rec aux li = match li with
