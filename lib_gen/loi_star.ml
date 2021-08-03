@@ -24,9 +24,6 @@ let inv n k =
     done;
     !r mod n;;
 
-let int_inv n k = starToInt n (inv n (intToStar n k));;
-
-
 let intToStar n i =
 	let r = ref 0 in
     for k = 0 to n-1 do
@@ -35,6 +32,7 @@ let intToStar n i =
     done;
     !r;;
 
+let int_inv n k = starToInt n (inv n (intToStar n k));;
     
 let op n (i,j) = starToInt n (mult_mod_n n ((intToStar n i),(intToStar n j) ));; 
 
