@@ -14,7 +14,7 @@ let _ =
         val diedral = Js.wrap_meth_callback
             (fun _ x -> pi_diedral(x))
         val star = Js.wrap_meth_callback
-            (fun _ x -W pi_star(x))
+            (fun _ x -> pi_star(x))
         val abeliang = Js.wrap_meth_callback
             (fun _ x -> abelian_gen_graph (Js.to_array x))
         val cyclicg = Js.wrap_meth_callback
@@ -24,6 +24,6 @@ let _ =
         val diedralg = Js.wrap_meth_callback
             (fun _ x -> pi_diedral_graph(x))
         val starg = Js.wrap_meth_callback
-        (fun _ x -> pi_diedral_graph(x))
+        (fun _ x -> pi_star_graph(x))
       end);
 
