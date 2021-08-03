@@ -17,12 +17,13 @@ let starToInt n i =
     !res;;
     
 let mult_mod_n n (a,b) = (a*b) mod n;;
+let rec pow b e = match e with
+|0 -> 1
+|e -> b*(pow b (e-1));;
 let inv n k = 
-	let r = ref 1 in
-    for i = 1 to (euler n)-1 do
-    	r := (!r)*k
-    done;
-    !r mod n;;
+	let p = euler n in
+	let r = pow k (p-1) in
+    r mod n;;
 
 let intToStar n i =
 	let r = ref 0 in
