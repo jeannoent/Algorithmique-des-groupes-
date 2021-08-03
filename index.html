@@ -246,10 +246,12 @@
         let resultat = document.getElementById(type+"_result");
         loader_change(type, true);
         let computed, input, contenu;
+        let graphe = false;
         switch (type) {
             case "abelian":
                 if (document.getElementById("abelian_graphe_checkbox").checked){
                     computed = ocamlcallback.abeliang(list);
+                    graphe = true;
                 } else {
                     computed = ocamlcallback.abelian(list);
                 }
@@ -259,6 +261,7 @@
                 contenu = parseInt(input.value);
                 if (document.getElementById("symetric_graphe_checkbox").checked){
                     computed = ocamlcallback.symetricg(contenu);
+                    graphe = true;
                 } else {
                     computed = ocamlcallback.symetric(contenu);
                 }
@@ -268,6 +271,7 @@
                 contenu = parseInt(input.value);
                 if (document.getElementById("diedral_graphe_checkbox").checked){
                     computed = ocamlcallback.diedralg(2*contenu);
+                    graphe = true;
                 } else {
                     computed = ocamlcallback.diedral(2*contenu);
                 }
@@ -277,6 +281,7 @@
                 contenu = parseInt(input.value);
                 if (document.getElementById("star_graphe_checkbox").checked){
                     computed = ocamlcallback.starg(contenu);
+                    graphe = true;
                 } else {
                     computed = ocamlcallback.star(contenu);
                 }
@@ -284,7 +289,9 @@
         }
         loader_change(type, false);
         resultat.textContent = "\\("+computed[1][1].c+"["+computed[1][3].c+"]\\)";
-        generate_graphe(computed[2].c);
+        if (graphe){
+            generate_graphe(computed[2].c);
+        }
         MathJax.typeset();
     }
 
