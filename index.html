@@ -223,7 +223,7 @@
             </div>
         </h5>
         <div class="center">
-            <canvas id="symetric_graph" width="800" height="600" />
+            <canvas id="star_graph" width="800" height="600" />
         </div>
     </div>
 </div>
@@ -275,9 +275,8 @@
                 } else {
                     computed = ocamlcallback.diedral(2*contenu);
                 }
-
                 break
-                case "star":
+            case "star":
                 input = document.getElementById("star_input");
                 contenu = parseInt(input.value);
                 if (document.getElementById("star_graphe_checkbox").checked){
@@ -285,7 +284,6 @@
                 } else {
                     computed = ocamlcallback.star(contenu);
                 }
-
                 break
         }
         loader_change(type, false);
@@ -327,7 +325,7 @@
     function update_star_latex() {
         let input = document.getElementById("star_input");
         let latex = document.getElementById("star_latex");
-        latex.textContent = "\\( \\pi[ (\\mathbb{Z}/ parseInt(input.value)) \\mathbb{Z})^\\star+ "} ]  \\)";
+        latex.textContent = "\\( \\pi[(\\mathbb{Z}/" + parseInt(input.value) +"\\mathbb{Z})^\\star" + "]  \\)";
         MathJax.typeset();
     }
 
@@ -337,6 +335,7 @@
         update_diedral_latex();
         update_star_latex();
     }
+    
     function loader_change(type, state) {
         let bouton = document.getElementById(type+"_compute_button");
         let loader = document.getElementById(type+"_loader");

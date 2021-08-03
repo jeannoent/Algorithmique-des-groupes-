@@ -19,7 +19,7 @@ let starToInt n i =
 let mult_mod_n n (a,b) = (a*b) mod n;;
 let inv n k = 
 	let r = ref 1 in
-    for i = 1 to (euler n)-1 do
+    for _ = 1 to (euler n)-1 do
     	r := (!r)*k
     done;
     !r mod n;;

@@ -85,6 +85,8 @@ let pi_cyclic_graph n = nb_gen_draw n (znz n);;
 
 let pi_diedral_graph n = nb_gen_draw n (died_epsilon n);;
 
+let pi_star_graph n = nb_gen_draw n (epsilon_star n);;
+
 
 
 
