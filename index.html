@@ -114,9 +114,6 @@
                 </label>
             </div>
         </h5>
-        <div class="center">
-            <canvas id="abelian_graph" width="800" height="600" />
-        </div>
     </div>
 </div>
 <div id="diedral" class="col s12">
@@ -149,9 +146,6 @@
                 </label>
             </div>
         </h5>
-        <div class="center">
-            <canvas id="diedral_graph" width="800" height="600" />
-        </div>
     </div>
 </div>
 <div id="symetric" class="col s12">
@@ -183,9 +177,6 @@
                 </label>
             </div>
         </h5>
-        <div class="center">
-            <canvas id="symetric_graph" width="800" height="600" />
-        </div>
     </div>
 </div>
 <div id="apropos" class="col s12">
@@ -222,17 +213,22 @@
                 </label>
             </div>
         </h5>
-        <div class="center">
-            <canvas id="star_graph" width="800" height="600" />
-        </div>
     </div>
+</div>
+
+<div class="center">
+    <canvas id="graph-canvas" width="800" height="600" />
 </div>
 
 </body>
 <script type="text/javascript">
     var elems = document.querySelectorAll('.tabs');
-    var instance = M.Tabs.init(elems, {});
+    var instance = M.Tabs.init(elems, {onShow: function () {
+            clear_graph();
+        }});
+    document.getElementById("graph-canvas").style.display = "none";
     var list = [];
+    var renderer;
     update_latex();
     function add_abelian() {
         let input = document.getElementById("abelian_input");
@@ -288,7 +284,7 @@
         }
         loader_change(type, false);
         resultat.textContent = "\\("+computed[1][1].c+"["+computed[1][3].c+"]\\)";
-        generate_graphe(type, computed[2].c);
+        generate_graphe(computed[2].c);
         MathJax.typeset();
     }
 
@@ -296,7 +292,7 @@
     function update_abelian_latex() {
         let result = document.getElementById("abelian_latex");
         let temporaire = "\\( \\pi [ ";
-        for (let index = 0; index < list.length; index++) {
+        for (let index = 0; list.length > index; index++) {
             if (index == list.length - 1) {
                 temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} ";
             } else {
@@ -349,17 +345,35 @@
         }
     }
 
-    function generate_graphe(type, content) {
-        graphJSON = JSON.parse(content);
-        // Replace with function
-        let graph = new Springy.Graph();
-        graph.loadJSON(graphJSON);
-        jQuery(function(){
-            let springy = jQuery('#'+type+'_graph').springy({
+    function generate_graphe(data) {
+        if (renderer) {
+            clear_graph();
+            renderer.graph.loadJSON(data);
+        } else {
+            let graph = new Springy.Graph();
+            graph.loadJSON(data);
+            renderer = $('#graph-canvas').springy({
                 graph: graph
             });
-        });
+        }
+        document.getElementById("graph-canvas").style.display = "block";
     }
+
+    function clear_graph() {
+        if (renderer) {
+            renderer.graph.edges.slice().map(function(edge) {
+                renderer.graph.removeEdge(edge);
+            });
+            renderer.graph.nodes.slice().map(function(node) {
+                renderer.graph.removeNode(node);
+            });
+        }
+        document.getElementById("graph-canvas").style.display = "none";
+    }
+
+    $('ul.tabs').on('click', 'a', function(e) {
+        clear_graph();
+    });
 
 </script>
 </html>
