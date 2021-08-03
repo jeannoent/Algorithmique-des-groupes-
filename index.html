@@ -352,10 +352,10 @@
     function generate_graphe(type, content) {
         graphJSON = JSON.parse(content);
         // Replace with function
-        var graph = new Springy.Graph();
+        let graph = new Springy.Graph();
         graph.loadJSON(graphJSON);
         jQuery(function(){
-            var springy = jQuery('#'+type+'_graph').springy({
+            let springy = jQuery('#'+type+'_graph').springy({
                 graph: graph
             });
         });
