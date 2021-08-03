@@ -125,4 +125,4 @@ let pi_cyclic n = nb_gen n (znz n);;
 
 let pi_diedral n = nb_gen n (died_epsilon n);;
 
-let pi_inv n = nb_gen n (epsilon_star n);;
+let pi_inv n = nb_gen (euler n) (epsilon_star n);;
