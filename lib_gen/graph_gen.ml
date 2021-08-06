@@ -35,7 +35,7 @@ let str_nodes l =
   in "["^(aux l)
 
 let str_couple (a,b) =
-  "{data : {id : '"^(str_set_oflist a)^"', target : '"^(str_set_oflist b)^"'}}"
+  "{data : {source : '"^(str_set_oflist a)^"', target : '"^(str_set_oflist b)^"'}}"
 
 
 let str_edges l =   
