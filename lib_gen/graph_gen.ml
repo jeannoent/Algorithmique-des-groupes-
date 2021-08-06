@@ -30,13 +30,13 @@ let next_subtree_graph l max =
 let str_nodes l =
   let rec aux li = match li with
       |[] -> "]"
-      |[x] -> "{data : {id : '"^(str_set_oflist x)^"' }}]"
-      |h::l -> "{data : {id : '"^(str_set_oflist h)^"' }},"^(aux l)
+      |[x] -> "{\"data\" : {\"id\" : '"^(str_set_oflist x)^"' }}]"
+      |h::l -> "{\"data\" : {\"id\" : '"^(str_set_oflist h)^"' }},"^(aux l)
   in "["^(aux l)
 
 let str_couple (a,b) =
-  "{data : {source : '"^(str_set_oflist a)^"', target : '"^(str_set_oflist b)^"'}}"
-
+  "{\"data\" : {\"source\" : '"^(str_set_oflist a)^"', \"target\" : '"^(str_set_oflist b)^"'}}"
+1
 
 let str_edges l =   
   let rec aux li = match li with
@@ -47,7 +47,7 @@ let str_edges l =
 
 
 let graph nodes edges = 
-  "{nodes : "^(str_nodes nodes) ^ ",edges: "^(str_edges edges)^"}"
+  "{\"nodes\" : "^(str_nodes nodes) ^ ",\"edges\": "^(str_edges edges)^"}"
 
 
 
