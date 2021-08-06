@@ -36,7 +36,7 @@ let str_nodes l =
 
 let str_couple (a,b) =
   "{\"data\" : {\"source\" : '"^(str_set_oflist a)^"', \"target\" : '"^(str_set_oflist b)^"'}}"
-1
+
 
 let str_edges l =   
   let rec aux li = match li with
