@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/springy/2.8.0/springy.min.js" integrity="sha512-DUvkGwYblOMa3MuO3lyvAXRj3ckZUA0ahk50T5/Yxm7Zubm3NVPJ7o2g5cxMHi41wk07V1/KnfsAslx/HUgiTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/springy/2.8.0/springyui.js" integrity="sha512-XhBbTRC1qBOjrgsYat6ZQ9X97SnR6SL1K+HDOllCWMkDmv6B/v9lnbhGEurP7QuQVbnAKp3XdN65OXXtyU7XUg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/dagre@0.7.4/dist/dagre.js"></script>
+    <script src="https://cytoscape.org/cytoscape.js-dagre/cytoscape-dagre.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         .brand-logo {
@@ -53,6 +53,17 @@
 
         .switch label input[type=checkbox]:checked+.lever {
             background-color: #68cefd;
+        }
+
+        #cy {
+            margin-left: 10%;
+            margin-right: 10%;
+            width: 80%;
+            height: 60vh;
+            left: 0;
+            top: 0;
+            z-index: 999;
+            border: 2px solid lightgrey;
         }
     </style>
 </head>
@@ -216,9 +227,9 @@
     </div>
 </div>
 
-<div class="center">
-    <canvas id="graph-canvas" width="800" height="600" />
-</div>
+
+<div id="cy"></div>
+
 
 </body>
 <script type="text/javascript">
@@ -226,9 +237,9 @@
     var instance = M.Tabs.init(elems, {onShow: function () {
             clear_graph();
         }});
-    document.getElementById("graph-canvas").style.display = "none";
     var list = [];
-    var renderer;
+    var cy;
+    document.getElementById("cy").style.display = "none";
     update_latex();
     function add_abelian() {
         let input = document.getElementById("abelian_input");
@@ -352,30 +363,64 @@
         }
     }
 
-    function generate_graphe(data) {
-        if (renderer) {
-            clear_graph();
-            renderer.graph.loadJSON(data);
-        } else {
-            let graph = new Springy.Graph();
-            graph.loadJSON(data);
-            renderer = $('#graph-canvas').springy({
-                graph: graph
-            });
-        }
-        document.getElementById("graph-canvas").style.display = "block";
+    function generate_graphe(datar) {
+        clear_graph();
+        console.log(datar)
+        document.getElementById("cy").style.display = "block";
+        let data = {
+            nodes: [{data: {id: '{1,2}'}}, {data: {id: '{0,2}'}}, {data: {id: '{3}'}}, {data: {id: '{2}'}}, {data: {id: '{1}'}}, {data: {id: '{0}'}}, {data: {id: '{}'}}],
+            edges: [{data: {source: '{2}', target: '{1,2}'}}, {
+                data: {
+                    source: '{2}',
+                    target: '{0,2}'
+                }
+            }, {data: {source: '{}', target: '{3}'}}, {data: {source: '{}', target: '{2}'}}, {
+                data: {
+                    source: '{}',
+                    target: '{1}'
+                }
+            }, {data: {source: '{}', target: '{0}'}}]
+        };
+
+        cy = window.cy = cytoscape({
+            container: document.getElementById('cy'),
+            boxSelectionEnabled: false,
+            autounselectify: true,
+            layout: {
+                name: 'dagre'
+            },
+            style: [
+                {
+                    selector: 'node',
+                    style: {
+                        'label': 'data(id)',
+                        'text-valign': 'center',
+                        'color': '#000000',
+                        'background-color': '#fff'
+                    }
+                },
+
+                {
+                    selector: 'edge',
+                    style: {
+                        'width': 1,
+                        'target-arrow-shape': 'triangle',
+                        'line-color': '#000000',
+                        'target-arrow-color': '#000000',
+                        'curve-style': 'bezier'
+                    }
+                }
+            ],
+
+            elements: data
+        });
     }
 
     function clear_graph() {
-        if (renderer) {
-            renderer.graph.edges.slice().map(function(edge) {
-                renderer.graph.removeEdge(edge);
-            });
-            renderer.graph.nodes.slice().map(function(node) {
-                renderer.graph.removeNode(node);
-            });
+        if (cy) {
+            cy.destroy()
         }
-        document.getElementById("graph-canvas").style.display = "none";
+        document.getElementById("cy").style.display = "none";
     }
 
     $('ul.tabs').on('click', 'a', function(e) {
