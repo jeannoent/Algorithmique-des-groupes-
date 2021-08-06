@@ -363,25 +363,9 @@
         }
     }
 
-    function generate_graphe(datar) {
+    function generate_graphe(data) {
         clear_graph();
-        console.log(datar)
         document.getElementById("cy").style.display = "block";
-        let data = {
-            nodes: [{data: {id: '{1,2}'}}, {data: {id: '{0,2}'}}, {data: {id: '{3}'}}, {data: {id: '{2}'}}, {data: {id: '{1}'}}, {data: {id: '{0}'}}, {data: {id: '{}'}}],
-            edges: [{data: {source: '{2}', target: '{1,2}'}}, {
-                data: {
-                    source: '{2}',
-                    target: '{0,2}'
-                }
-            }, {data: {source: '{}', target: '{3}'}}, {data: {source: '{}', target: '{2}'}}, {
-                data: {
-                    source: '{}',
-                    target: '{1}'
-                }
-            }, {data: {source: '{}', target: '{0}'}}]
-        };
-
         cy = window.cy = cytoscape({
             container: document.getElementById('cy'),
             boxSelectionEnabled: false,
