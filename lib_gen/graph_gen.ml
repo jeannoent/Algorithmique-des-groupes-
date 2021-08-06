@@ -20,7 +20,7 @@ let next_subtree_graph l max =
   let nodes = ref [] in
   for i=0 to min-1 do
     next:= (i::l) :: !next;
-    nodes := (l::(i::l)::[]) :: !nodes
+    nodes := (l,(i::l)) :: !nodes
   done;
   (!next,!nodes)
 
@@ -30,21 +30,24 @@ let next_subtree_graph l max =
 let str_nodes l =
   let rec aux li = match li with
       |[] -> "]"
-      |[x] -> "\""^(str_set_oflist x)^"\"]"
-      |h::l -> "\""^(str_set_oflist h)^"\""^","^(aux l)
+      |[x] -> "{data : {id : '"^(str_set_oflist x)^"' }}]"
+      |h::l -> "{data : {id : '"^(str_set_oflist h)^"' }},"^(aux l)
   in "["^(aux l)
+
+let str_couple (a,b) =
+  "{data : {id : '"^(str_set_oflist a)^"', target : '"^(str_set_oflist b)^"'}}"
 
 
 let str_edges l =   
   let rec aux li = match li with
       |[] -> "]"
-      |[x] -> (str_nodes x)^"]"
-      |h::l -> (str_nodes h)^","^(aux l)
+      |[x] -> (str_couple x)^"]"
+      |h::l -> (str_couple h)^","^(aux l)
   in "["^(aux l)
 
 
 let graph nodes edges = 
-  "{\"nodes\": "^(str_nodes nodes) ^ ",\"edges\": "^(str_edges edges)^"}"
+  "{nodes : "^(str_nodes nodes) ^ ",edges: "^(str_edges edges)^"}"
 
 
 
@@ -90,4 +93,4 @@ let pi_star_graph n = nb_gen_draw n (epsilon_star n);;
 
 
 
-(*let%test "graphe" = print_string (snd (nb_gen_draw 4 (znz 4)));false*)
+let%test "graphe" = print_string (snd (nb_gen_draw 4 (znz 4)));false
