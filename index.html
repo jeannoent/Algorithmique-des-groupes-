@@ -130,7 +130,7 @@
         <h4 class="center section-title">Groupe Symétrique</h4>
         <div class="row">
             <div class="col s10">
-                <input id="symetric_input" name="resolve-input" onkeyup="update_symetric_latex()" placeholder="k ?"
+                <input id="symetric_input" name="resolve-input" onkeyup="update_symetric_latex()" onchange="update_symetric_latex()" placeholder="k ?"
                        type="number">
             </div>
             <div class="col s2">
@@ -168,7 +168,7 @@
         <h4 class="center section-title">Inversibles modulo un entier</h4>
         <div class="row">
             <div class="col s10">
-                <input id="star_input" name="resolve-input" onkeyup="update_star_latex()" placeholder="k ?"
+                <input id="star_input" name="resolve-input" onkeyup="update_star_latex()" onchange="update_star_latex()" placeholder="k ?"
                        type="number">
             </div>
             <div class="col s2">
@@ -300,21 +300,21 @@
     function update_symetric_latex() {
         let input = document.getElementById("symetric_input");
         let latex = document.getElementById("symetric_latex");
-        latex.textContent = "\\( \\pi[ \\mathfrak{S}_{" + input.value + "} ]  \\)";
+        latex.textContent = "\\( \\pi[ \\mathfrak{S}_{" + (parseInt(input.value)|0) + "} ]  \\)";
         MathJax.typeset();
     }
 
     function update_diedral_latex() {
         let input = document.getElementById("diedral_input");
         let latex = document.getElementById("diedral_latex");
-        latex.textContent = "\\( \\pi[ D_{" + (2 * parseInt(input.value)) + "} ]  \\)";
+        latex.textContent = "\\( \\pi[ D_{" + (2 * parseInt(input.value)|0) + "} ]  \\)";
         MathJax.typeset();
     }
 
     function update_star_latex() {
         let input = document.getElementById("star_input");
         let latex = document.getElementById("star_latex");
-        latex.textContent = "\\( \\pi[(\\mathbb{Z}/" + parseInt(input.value) + "\\mathbb{Z})^\\star" + "]  \\)";
+        latex.textContent = "\\( \\pi[(\\mathbb{Z}/" + (parseInt(input.value)|0) + "\\mathbb{Z})^\\star" + "]  \\)";
         MathJax.typeset();
     }
 

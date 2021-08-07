@@ -77,7 +77,7 @@
     </div>
 
 
-    <h4 class="center rsh4"><span id="abelian_latex">\( \pi[\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z} ]  \)</span>
+    <h4 class="center rsh4"><span id="abelian_latex"></span>
       = <span id="abelian_result"></span></h4>
     <h5>Graphes :
       <div class="switch">
@@ -130,7 +130,7 @@
     <h4 class="center section-title">Groupe Symétrique</h4>
     <div class="row">
       <div class="col s10">
-        <input id="symetric_input" name="resolve-input" onkeyup="update_symetric_latex()" placeholder="k ?"
+        <input id="symetric_input" name="resolve-input" onkeyup="update_symetric_latex()" onchange="update_symetric_latex()" placeholder="k ?"
                type="number">
       </div>
       <div class="col s2">
@@ -168,7 +168,7 @@
     <h4 class="center section-title">Inversibles modulo un entier</h4>
     <div class="row">
       <div class="col s10">
-        <input id="star_input" name="resolve-input" onkeyup="update_star_latex()" placeholder="k ?"
+        <input id="star_input" name="resolve-input" onkeyup="update_star_latex()" onchange="update_star_latex()" placeholder="k ?"
                type="number">
       </div>
       <div class="col s2">
@@ -284,7 +284,7 @@
 
   function update_abelian_latex() {
     let result = document.getElementById("abelian_latex");
-    let temporaire = "\\( \\pi [ ";
+    let temporaire = "\\( \\text{rg} ( ";
     for (let index = 0; list.length > index; index++) {
       if (index == list.length - 1) {
         temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} ";
@@ -292,7 +292,7 @@
         temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} \\times ";
       }
     }
-    temporaire = temporaire + "] \\)";
+    temporaire = temporaire + ") \\)";
     result.textContent = temporaire;
     MathJax.typeset();
   }
@@ -300,21 +300,21 @@
   function update_symetric_latex() {
     let input = document.getElementById("symetric_input");
     let latex = document.getElementById("symetric_latex");
-    latex.textContent = "\\( \\pi[ \\mathfrak{S}_{" + input.value + "} ]  \\)";
+    latex.textContent = "\\( \\text{rg} ( \\mathfrak{S}_{" + (parseInt(input.value)|0) + "} )  \\)";
     MathJax.typeset();
   }
 
   function update_diedral_latex() {
     let input = document.getElementById("diedral_input");
     let latex = document.getElementById("diedral_latex");
-    latex.textContent = "\\( \\pi[ D_{" + (2 * parseInt(input.value)) + "} ]  \\)";
+    latex.textContent = "\\( \\text{rg} ( D_{" + (2 * parseInt(input.value)|0) + "} )  \\)";
     MathJax.typeset();
   }
 
   function update_star_latex() {
     let input = document.getElementById("star_input");
     let latex = document.getElementById("star_latex");
-    latex.textContent = "\\( \\pi[(\\mathbb{Z}/" + parseInt(input.value) + "\\mathbb{Z})^\\star" + "]  \\)";
+    latex.textContent = "\\( \\text{rg} ((\\mathbb{Z}/" + (parseInt(input.value)|0) + "\\mathbb{Z})^\\star" + ")  \\)";
     MathJax.typeset();
   }
 
