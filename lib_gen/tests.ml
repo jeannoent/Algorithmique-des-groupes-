@@ -1,7 +1,5 @@
 (*open Loi_gp_ab*)
-open Nb_gen
 (*open Permutation*)
-open Graph_gen
 
 (*exception PermError*)
 
@@ -76,17 +74,3 @@ let%test_unit "multi-threading" = test_mt 40 *)
 (*let fst3 (a,_,_) = a
 
 let%test_unit "diédral" = print_string "nb gen D 2: " ; print_string  (fst3 (nb_gen ~print:true 4 (znz 4))); failwith "fuck"*)
-
-let%test "time" = 
-  let res = ref (Sys.time ()) in
-  for n=1 to 35 do
-    let _= nb_gen n (znz n) in ()
-  done;
-  res:=Sys.time () -. !res;
-  print_string "graph OFF: "; print_float !res;print_newline ();
-  res := Sys.time ();
-  for n=1 to 35 do
-    let _= nb_gen_draw n (znz n) in ()
-  done;
-  print_string "graph ON: "; print_float !res;print_newline ();
-  false
