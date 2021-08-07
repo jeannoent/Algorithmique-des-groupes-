@@ -38,9 +38,8 @@ let decomp_inv n =
 let abelian_rg arr = 
     let n = ref 1 and len = Array.length arr in
     for i = 0 to (len-1) do
-        n := (!n)*arr.(i)
+        n := (!n)*(arr.(i))
     done;
-    in
     rg (!n) (abelian_epsilon arr);;
 
 let sym_rg n = rg (fac n) (sym_epsilon n);;
