@@ -1,0 +1,46 @@
+.brand-logo {
+    margin-left: 1vw;
+}
+
+.container {
+    margin-top: 10vh;
+}
+
+.rsh4 {
+    margin-top: 15vh;
+}
+
+.section-title {
+    margin-bottom: 5vh;
+}
+
+.btn {
+    width: 100%;
+}
+
+.progress {
+    background-color: #e1f5fe;
+}
+
+.progress .indeterminate {
+    background-color: #03a9f4;
+}
+
+.switch label input[type=checkbox]:checked + .lever:after {
+    background-color: #03a9f4;
+}
+
+.switch label input[type=checkbox]:checked + .lever {
+    background-color: #68cefd;
+}
+
+#cy {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    height: 60vh;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    border: 2px solid lightgrey;
+}

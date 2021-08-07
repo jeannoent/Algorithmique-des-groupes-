@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Rang</title>
+  <link href="favicon.ico" rel="icon"/>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="main.js" type="text/javascript"></script>
+  <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!-- Compiled and minified CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+  <script src="https://unpkg.com/dagre@0.7.4/dist/dagre.js"></script>
+  <script src="https://cytoscape.org/cytoscape.js-dagre/cytoscape-dagre.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<nav class="nav-extended light-blue darken-3">
+  <div class="nav-wrapper">
+    <a class="brand-logo" href="#">Rang</a>
+    <a class="sidenav-trigger" data-target="mobile-demo" href="#"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down" id="nav-mobile">
+      <li><a href="index.html">Parties génératrices</a></li>
+      <li><a href="rang.html">Rang</a></li>
+      <li><a href="decomposition.html">Décomposition</a></li>
+    </ul>
+  </div>
+  <div class="nav-content">
+    <ul class="tabs tabs-transparent">
+      <li class="tab"><a class="active" href="#abelian">Abélien</a></li>
+      <li class="tab"><a href="#symetric">Symétrique</a></li>
+      <li class="tab"><a href="#diedral">Diédral</a></li>
+      <li class="tab"><a href="#star"> Inversibles </a></li>
+      <li class="tab"><a href="#apropos">A propos</a></li>
+    </ul>
+  </div>
+</nav>
+<ul class="sidenav" id="mobile-demo">
+  <li><a href="index.html">Parties génératrices</a></li>
+  <li><a href="rang.html">Rang</a></li>
+  <li><a href="decomposition.html">Décomposition</a></li>
+</ul>
+<div class="col s12" id="abelian">
+  <div class="container">
+    <h4 class="center section-title">Groupe abélien</h4>
+    <div class="row">
+      <div class="col s6">
+        <input id="abelian_input" name="resolve-input" placeholder="k?" type="number">
+      </div>
+      <div class="col s2">
+        <a class="waves-effect waves-light btn light-blue darken-4" onclick="add_abelian()">
+          <i class="material-icons right">add</i>
+          Add
+        </a>
+      </div>
+      <div class="col s2">
+        <a class="waves-effect waves-light btn light-blue darken-4" onclick="clear_abelian_list()">
+          <i class="material-icons right">delete</i>
+          Clear
+        </a>
+      </div>
+      <div class="col s2">
+        <a class="waves-effect waves-light btn light-blue darken-4" id="abelian_compute_button"
+           onclick="compute('abelian')">
+          <i class="material-icons right">arrow_forward</i>
+          Compute
+        </a>
+      </div>
+    </div>
+    <div class="progress" id="abelian_loader" style="display: none;">
+      <div class="indeterminate"></div>
+    </div>
+
+
+    <h4 class="center rsh4"><span id="abelian_latex">\( \pi[\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z} ]  \)</span>
+      = <span id="abelian_result"></span></h4>
+    <h5>Graphes :
+      <div class="switch">
+        <label>
+          Off
+          <input id="abelian_graphe_checkbox" type="checkbox">
+          <span class="lever"></span>
+          On
+        </label>
+      </div>
+    </h5>
+  </div>
+</div>
+<div class="col s12" id="diedral">
+  <div class="container">
+    <h4 class="center section-title">Groupe Diédral</h4>
+    <div class="row">
+      <div class="col s10">
+        <input id="diedral_input" name="resolve-input" onchange="update_diedral_latex()" onkeyup="update_diedral_latex()"
+               placeholder="k ?" type="number">
+      </div>
+      <div class="col s2">
+        <a class="waves-effect waves-light btn light-blue darken-4" id="diedral_compute_button"
+           onclick="compute('diedral')">
+          <i class="material-icons right">arrow_forward</i>
+          Compute
+        </a>
+      </div>
+    </div>
+    <div class="progress" id="diedral_loader" style="display: none;">
+      <div class="indeterminate"></div>
+    </div>
+
+    <h4 class="center rsh4"><span id="diedral_latex">\( \pi[ D_{2k}] \)</span> = <span
+            id="diedral_result"></span></h4>
+    <h5>Graphes :
+      <div class="switch">
+        <label>
+          Off
+          <input id="diedral_graphe_checkbox" type="checkbox">
+          <span class="lever"></span>
+          On
+        </label>
+      </div>
+    </h5>
+  </div>
+</div>
+<div class="col s12" id="symetric">
+  <div class="container">
+    <h4 class="center section-title">Groupe Symétrique</h4>
+    <div class="row">
+      <div class="col s10">
+        <input id="symetric_input" name="resolve-input" onkeyup="update_symetric_latex()" placeholder="k ?"
+               type="number">
+      </div>
+      <div class="col s2">
+        <a class="waves-effect waves-light btn light-blue darken-4" id="symetric_compute_button"
+           onclick="compute('symetric')">
+          <i class="material-icons right">arrow_forward</i>
+          Compute
+        </a>
+      </div>
+    </div>
+    <div class="progress" id="symetric_loader" style="display: none;">
+      <div class="indeterminate"></div>
+    </div>
+    <h4 class="center rsh4"><span id="symetric_latex">\( \pi[ \mathfrak{S}_{k} ] \)</span> = <span
+            id="symetric_result"></span></h4>
+    <h5>Graphes :
+      <div class="switch">
+        <label>
+          Off
+          <input id="symetric_graphe_checkbox" type="checkbox">
+          <span class="lever"></span>
+          On
+        </label>
+      </div>
+    </h5>
+  </div>
+</div>
+<div class="col s12" id="apropos">
+  <div class="container">
+    <h4 class="center section-title">A propos</h4>
+  </div>
+</div>
+<div class="col s12" id="star">
+  <div class="container">
+    <h4 class="center section-title">Inversibles modulo un entier</h4>
+    <div class="row">
+      <div class="col s10">
+        <input id="star_input" name="resolve-input" onkeyup="update_star_latex()" placeholder="k ?"
+               type="number">
+      </div>
+      <div class="col s2">
+        <a class="waves-effect waves-light btn light-blue darken-4" id="star_compute_button"
+           onclick="compute('star')">
+          <i class="material-icons right">arrow_forward</i>
+          Compute
+        </a>
+      </div>
+    </div>
+    <div class="progress" id="star_loader" style="display: none;">
+      <div class="indeterminate"></div>
+    </div>
+    <h4 class="center rsh4"><span id="star_latex">\( \pi[ (\mathbb{Z}/n\mathbb{Z})^\star ] \)</span> = <span
+            id="star_result"></span></h4>
+    <h5>Graphes :
+      <div class="switch">
+        <label>
+          Off
+          <input id="star_graphe_checkbox" type="checkbox">
+          <span class="lever"></span>
+          On
+        </label>
+      </div>
+    </h5>
+  </div>
+</div>
+
+
+<div id="cy"></div>
+
+
+</body>
+<script type="text/javascript">
+  var sidenavs = document.querySelectorAll('.sidenav');
+  var sidenavs_instances = M.Sidenav.init(sidenavs, {});
+  var tabs = document.querySelectorAll('.tabs');
+  var tabs_instance = M.Tabs.init(tabs, {
+    onShow: function () {
+      clear_graph();
+    }
+  });
+  var list = [];
+  var cy;
+  document.getElementById("cy").style.display = "none";
+  update_latex();
+
+  function add_abelian() {
+    let input = document.getElementById("abelian_input");
+    list.push(parseInt(input.value))
+    update_abelian_latex();
+    input.value = "";
+  }
+
+  function clear_abelian_list() {
+    list = [];
+    update_abelian_latex();
+  }
+
+  function compute(type) {
+    let resultat = document.getElementById(type + "_result");
+    loader_change(type, true);
+    let computed, input, contenu;
+    let graphe = false;
+    switch (type) {
+      case "abelian":
+        if (document.getElementById("abelian_graphe_checkbox").checked) {
+          computed = ocamlcallback.abeliang(list);
+          graphe = true;
+        } else {
+          computed = ocamlcallback.abelian(list);
+        }
+        break
+      case "symetric":
+        input = document.getElementById("symetric_input");
+        contenu = parseInt(input.value);
+        if (document.getElementById("symetric_graphe_checkbox").checked) {
+          computed = ocamlcallback.symetricg(contenu);
+          graphe = true;
+        } else {
+          computed = ocamlcallback.symetric(contenu);
+        }
+        break
+      case "diedral":
+        input = document.getElementById("diedral_input");
+        contenu = parseInt(input.value);
+        if (document.getElementById("diedral_graphe_checkbox").checked) {
+          computed = ocamlcallback.diedralg(2 * contenu);
+          graphe = true;
+        } else {
+          computed = ocamlcallback.diedral(2 * contenu);
+        }
+        break
+      case "star":
+        input = document.getElementById("star_input");
+        contenu = parseInt(input.value);
+        if (document.getElementById("star_graphe_checkbox").checked) {
+          computed = ocamlcallback.starg(contenu);
+          graphe = true;
+        } else {
+          computed = ocamlcallback.star(contenu);
+        }
+        break
+    }
+    loader_change(type, false);
+    resultat.textContent = "\\(" + computed[1][1].c + "[" + computed[1][3].c + "]\\)";
+    if (graphe) {
+      generate_graphe(JSON.parse(computed[2].c));
+    }
+    MathJax.typeset();
+  }
+
+
+  function update_abelian_latex() {
+    let result = document.getElementById("abelian_latex");
+    let temporaire = "\\( \\pi [ ";
+    for (let index = 0; list.length > index; index++) {
+      if (index == list.length - 1) {
+        temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} ";
+      } else {
+        temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} \\times ";
+      }
+    }
+    temporaire = temporaire + "] \\)";
+    result.textContent = temporaire;
+    MathJax.typeset();
+  }
+
+  function update_symetric_latex() {
+    let input = document.getElementById("symetric_input");
+    let latex = document.getElementById("symetric_latex");
+    latex.textContent = "\\( \\pi[ \\mathfrak{S}_{" + input.value + "} ]  \\)";
+    MathJax.typeset();
+  }
+
+  function update_diedral_latex() {
+    let input = document.getElementById("diedral_input");
+    let latex = document.getElementById("diedral_latex");
+    latex.textContent = "\\( \\pi[ D_{" + (2 * parseInt(input.value)) + "} ]  \\)";
+    MathJax.typeset();
+  }
+
+  function update_star_latex() {
+    let input = document.getElementById("star_input");
+    let latex = document.getElementById("star_latex");
+    latex.textContent = "\\( \\pi[(\\mathbb{Z}/" + parseInt(input.value) + "\\mathbb{Z})^\\star" + "]  \\)";
+    MathJax.typeset();
+  }
+
+  function update_latex() {
+    update_abelian_latex();
+    update_symetric_latex();
+    update_diedral_latex();
+    update_star_latex();
+  }
+
+  function loader_change(type, state) {
+    let bouton = document.getElementById(type + "_compute_button");
+    let loader = document.getElementById(type + "_loader");
+    if (state) {
+      bouton.classList.add("disabled");
+      loader.style.display = "block";
+    } else {
+      bouton.classList.remove("disabled");
+      loader.style.display = "none";
+    }
+  }
+
+  function generate_graphe(data) {
+    clear_graph();
+    document.getElementById("cy").style.display = "block";
+    cy = window.cy = cytoscape({
+      container: document.getElementById('cy'),
+      boxSelectionEnabled: false,
+      autounselectify: true,
+      layout: {
+        name: 'dagre'
+      },
+      style: [
+        {
+          selector: 'node',
+          style: {
+            'label': 'data(id)',
+            'text-valign': 'center',
+            'color': '#000000',
+            'background-color': '#fff'
+          }
+        },
+
+        {
+          selector: 'edge',
+          style: {
+            'width': 1,
+            'target-arrow-shape': 'triangle',
+            'line-color': '#000000',
+            'target-arrow-color': '#000000',
+            'curve-style': 'bezier'
+          }
+        }
+      ],
+
+      elements: data
+    });
+  }
+
+  function clear_graph() {
+    if (cy) {
+      cy.destroy()
+    }
+    document.getElementById("cy").style.display = "none";
+  }
+
+  $('ul.tabs').on('click', 'a', function (e) {
+    clear_graph();
+  });
+
+</script>
+</html>
