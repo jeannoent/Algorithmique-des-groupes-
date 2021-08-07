@@ -119,7 +119,7 @@
         }
         loader_change(type, false);
         let temporaire = "\\(";
-        for (let index = 0; computed.length > index; index++) {
+        for (let index = 1; computed.length > index; index++) {
             if (index == computed.length - 1) {
                 temporaire = temporaire + " \\mathbb{Z}/ " + computed[index] + " \\mathbb{Z} ";
             } else {
