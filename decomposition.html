@@ -118,7 +118,7 @@
                 break
         }
         loader_change(type, false);
-        let temporaire = "\\(\\simeq";
+        let temporaire = "\\(\\, \\simeq";
         for (let index = 1; computed.length > index; index++) {
             if (index == computed.length - 1) {
                 temporaire = temporaire + " \\mathbb{Z}/ " + computed[index] + " \\mathbb{Z} ";
@@ -137,7 +137,7 @@
     function update_star_latex() {
         let input = document.getElementById("star_input");
         let latex = document.getElementById("star_latex");
-        latex.textContent = "\\( (\\mathbb{Z}/" + parseInt(input.value) + "\\mathbb{Z})^\\star \\)";
+        latex.textContent = "\\( (\\mathbb{Z}/" + (parseInt(input.value)|0) + "\\mathbb{Z})^\\star \\)";
         MathJax.typeset();
     }
 
