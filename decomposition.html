@@ -105,22 +105,23 @@
         switch (type) {
             case "star":
                 input = document.getElementById("star_input");
-                contenu = parseInt(input.value);
-                if ((contenu|0) < 2) {
-                    computed = 0;
-                } else {
-                    computed = ocamlcallback.dstar(contenu);
-                }
+                contenu = (parseInt(input.value)|0);
+                computed = ocamlcallback.dstar(contenu);
                 break
         }
         loader_change(type, false);
         let temporaire = "\\(\\, \\simeq";
-        for (let index = 1; computed.length > index; index++) {
-            if (index == computed.length - 1) {
-                temporaire = temporaire + " \\mathbb{Z}/ " + computed[index] + " \\mathbb{Z} ";
-            } else {
-                temporaire = temporaire + " \\mathbb{Z}/ " + computed[index] + " \\mathbb{Z} \\times ";
+        if (computed.length > 1){
+            for (let index = 1; computed.length > index; index++) {
+                if (index == computed.length - 1) {
+                    temporaire = temporaire + " \\mathbb{Z}/ " + computed[index] + " \\mathbb{Z} ";
+                } else {
+                    temporaire = temporaire + " \\mathbb{Z}/ " + computed[index] + " \\mathbb{Z} \\times ";
+                }
             }
+        }
+        else {
+            temporaire = temporaire + "{0}";
         }
         temporaire = temporaire + "\\)";
         resultat.textContent = temporaire;
