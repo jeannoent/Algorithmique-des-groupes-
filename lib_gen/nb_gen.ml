@@ -72,7 +72,7 @@ let next_subtree l max =
     for i=0 to min-1 do
     	res:= (i::l) :: !res
     done;
-    !res
+    !res;;
     
 (*retourne le nombre de parties génératrices d'un goupe d'ordre n de loi e*)
 
