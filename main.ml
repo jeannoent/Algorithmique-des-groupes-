@@ -34,5 +34,7 @@ let _ =
             (fun _ x -> died_rg(x))
         val rstar = Js.wrap_meth_callback
             (fun _ x -> star_rg(x))
+        val dstar = Js.wrap_meth_callback
+            (fun _ x -> decomp_inv(x))
       end);
 
