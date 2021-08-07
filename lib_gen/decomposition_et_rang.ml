@@ -36,8 +36,8 @@ let decomp_inv n =
     !res;;
 
 let abelian_rg arr = 
-    let n = ref 0 and len = Array.length arr in
-    for i = 0 to len-1 do
+    let n = ref 1 and len = Array.length arr in
+    for i = 0 to (len-1) do
         n := (!n)*arr.(i)
     done;
     in
