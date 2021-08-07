@@ -18,4 +18,4 @@
 
 (alias
   (name default)
-  (deps main.js index.html style.css))
+  (deps main.js index.html decomposition.html rang.html style.css))
