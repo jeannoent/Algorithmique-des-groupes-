@@ -66,13 +66,13 @@
         <div class="progress" id="star_loader" style="display: none;">
             <div class="indeterminate"></div>
         </div>
-        <h4 class="center rsh4"><span id="star_latex"></span> = <span
+        <h4 class="center rsh4"><span id="star_latex"></span><span
                 id="star_result"></span></h4>
         <h5>Graphes :
             <div class="switch">
                 <label>
                     Off
-                    <input id="star_graphe_checkbox" type="checkbox">
+                    <input disabled id="star_graphe_checkbox" type="checkbox">
                     <span class="lever"></span>
                     On
                 </label>
@@ -118,7 +118,7 @@
                 break
         }
         loader_change(type, false);
-        let temporaire = "\\(";
+        let temporaire = "\\(\\simeq";
         for (let index = 1; computed.length > index; index++) {
             if (index == computed.length - 1) {
                 temporaire = temporaire + " \\mathbb{Z}/ " + computed[index] + " \\mathbb{Z} ";
