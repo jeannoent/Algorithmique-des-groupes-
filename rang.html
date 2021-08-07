@@ -83,7 +83,7 @@
       <div class="switch">
         <label>
           Off
-          <input id="abelian_graphe_checkbox" type="checkbox">
+          <input disabled id="abelian_graphe_checkbox" type="checkbox">
           <span class="lever"></span>
           On
         </label>
@@ -117,7 +117,7 @@
       <div class="switch">
         <label>
           Off
-          <input id="diedral_graphe_checkbox" type="checkbox">
+          <input disabled id="diedral_graphe_checkbox" type="checkbox">
           <span class="lever"></span>
           On
         </label>
@@ -150,7 +150,7 @@
       <div class="switch">
         <label>
           Off
-          <input id="symetric_graphe_checkbox" type="checkbox">
+          <input disabled id="symetric_graphe_checkbox" type="checkbox">
           <span class="lever"></span>
           On
         </label>
@@ -188,7 +188,7 @@
       <div class="switch">
         <label>
           Off
-          <input id="star_graphe_checkbox" type="checkbox">
+          <input disabled id="star_graphe_checkbox" type="checkbox">
           <span class="lever"></span>
           On
         </label>
@@ -239,7 +239,7 @@
           computed = ocamlcallback.abeliang(list);
           graphe = true;
         } else {
-          computed = ocamlcallback.abelian(list);
+          computed = ocamlcallback.rabelian(list);
         }
         break
       case "symetric":
@@ -249,7 +249,7 @@
           computed = ocamlcallback.symetricg(contenu);
           graphe = true;
         } else {
-          computed = ocamlcallback.symetric(contenu);
+          computed = ocamlcallback.rsymetric(contenu);
         }
         break
       case "diedral":
@@ -259,7 +259,7 @@
           computed = ocamlcallback.diedralg(2 * contenu);
           graphe = true;
         } else {
-          computed = ocamlcallback.diedral(2 * contenu);
+          computed = ocamlcallback.rdiedral(2 * contenu);
         }
         break
       case "star":
@@ -269,7 +269,7 @@
           computed = ocamlcallback.starg(contenu);
           graphe = true;
         } else {
-          computed = ocamlcallback.star(contenu);
+          computed = ocamlcallback.rstar(contenu);
         }
         break
     }
