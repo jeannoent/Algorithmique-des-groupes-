@@ -1,6 +1,7 @@
 open Nb_gen
 open Loi_star
 open Loi_gp_ab
+open Permutation
 
 let add_inv_queue q i = Queue.add i q;;
 
