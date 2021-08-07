@@ -32,9 +32,6 @@
     </div>
     <div class="nav-content">
         <ul class="tabs tabs-transparent">
-            <li class="tab"><a class="active" href="#abelian">Abélien</a></li>
-            <li class="tab"><a href="#symetric">Symétrique</a></li>
-            <li class="tab"><a href="#diedral">Diédral</a></li>
             <li class="tab"><a href="#star"> Inversibles </a></li>
             <li class="tab"><a href="#apropos">A propos</a></li>
         </ul>
@@ -45,119 +42,6 @@
     <li><a href="rang.html">Rang</a></li>
     <li><a href="decomposition.html">Décomposition</a></li>
 </ul>
-<div class="col s12" id="abelian">
-    <div class="container">
-        <h4 class="center section-title">Groupe abélien</h4>
-        <div class="row">
-            <div class="col s6">
-                <input id="abelian_input" name="resolve-input" placeholder="k?" type="number">
-            </div>
-            <div class="col s2">
-                <a class="waves-effect waves-light btn light-blue darken-4" onclick="add_abelian()">
-                    <i class="material-icons right">add</i>
-                    Add
-                </a>
-            </div>
-            <div class="col s2">
-                <a class="waves-effect waves-light btn light-blue darken-4" onclick="clear_abelian_list()">
-                    <i class="material-icons right">delete</i>
-                    Clear
-                </a>
-            </div>
-            <div class="col s2">
-                <a class="waves-effect waves-light btn light-blue darken-4" id="abelian_compute_button"
-                   onclick="compute('abelian')">
-                    <i class="material-icons right">arrow_forward</i>
-                    Compute
-                </a>
-            </div>
-        </div>
-        <div class="progress" id="abelian_loader" style="display: none;">
-            <div class="indeterminate"></div>
-        </div>
-
-
-        <h4 class="center rsh4"><span id="abelian_latex">\( \pi[\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z} ]  \)</span>
-            = <span id="abelian_result"></span></h4>
-        <h5>Graphes :
-            <div class="switch">
-                <label>
-                    Off
-                    <input id="abelian_graphe_checkbox" type="checkbox">
-                    <span class="lever"></span>
-                    On
-                </label>
-            </div>
-        </h5>
-    </div>
-</div>
-<div class="col s12" id="diedral">
-    <div class="container">
-        <h4 class="center section-title">Groupe Diédral</h4>
-        <div class="row">
-            <div class="col s10">
-                <input id="diedral_input" name="resolve-input" onchange="update_diedral_latex()" onkeyup="update_diedral_latex()"
-                       placeholder="k ?" type="number">
-            </div>
-            <div class="col s2">
-                <a class="waves-effect waves-light btn light-blue darken-4" id="diedral_compute_button"
-                   onclick="compute('diedral')">
-                    <i class="material-icons right">arrow_forward</i>
-                    Compute
-                </a>
-            </div>
-        </div>
-        <div class="progress" id="diedral_loader" style="display: none;">
-            <div class="indeterminate"></div>
-        </div>
-
-        <h4 class="center rsh4"><span id="diedral_latex">\( \pi[ D_{2k}] \)</span> = <span
-                id="diedral_result"></span></h4>
-        <h5>Graphes :
-            <div class="switch">
-                <label>
-                    Off
-                    <input id="diedral_graphe_checkbox" type="checkbox">
-                    <span class="lever"></span>
-                    On
-                </label>
-            </div>
-        </h5>
-    </div>
-</div>
-<div class="col s12" id="symetric">
-    <div class="container">
-        <h4 class="center section-title">Groupe Symétrique</h4>
-        <div class="row">
-            <div class="col s10">
-                <input id="symetric_input" name="resolve-input" onkeyup="update_symetric_latex()" placeholder="k ?"
-                       type="number">
-            </div>
-            <div class="col s2">
-                <a class="waves-effect waves-light btn light-blue darken-4" id="symetric_compute_button"
-                   onclick="compute('symetric')">
-                    <i class="material-icons right">arrow_forward</i>
-                    Compute
-                </a>
-            </div>
-        </div>
-        <div class="progress" id="symetric_loader" style="display: none;">
-            <div class="indeterminate"></div>
-        </div>
-        <h4 class="center rsh4"><span id="symetric_latex">\( \pi[ \mathfrak{S}_{k} ] \)</span> = <span
-                id="symetric_result"></span></h4>
-        <h5>Graphes :
-            <div class="switch">
-                <label>
-                    Off
-                    <input id="symetric_graphe_checkbox" type="checkbox">
-                    <span class="lever"></span>
-                    On
-                </label>
-            </div>
-        </h5>
-    </div>
-</div>
 <div class="col s12" id="apropos">
     <div class="container">
         <h4 class="center section-title">A propos</h4>
@@ -168,7 +52,7 @@
         <h4 class="center section-title">Inversibles modulo un entier</h4>
         <div class="row">
             <div class="col s10">
-                <input id="star_input" name="resolve-input" onkeyup="update_star_latex()" placeholder="k ?"
+                <input id="star_input" name="resolve-input" onkeyup="update_star_latex()" onchange="update_star_latex()" placeholder="k ?"
                        type="number">
             </div>
             <div class="col s2">
@@ -215,18 +99,6 @@
     var cy;
     document.getElementById("cy").style.display = "none";
     update_latex();
-
-    function add_abelian() {
-        let input = document.getElementById("abelian_input");
-        list.push(parseInt(input.value))
-        update_abelian_latex();
-        input.value = "";
-    }
-
-    function clear_abelian_list() {
-        list = [];
-        update_abelian_latex();
-    }
 
     function compute(type) {
         let resultat = document.getElementById(type + "_result");
@@ -281,36 +153,6 @@
         MathJax.typeset();
     }
 
-
-    function update_abelian_latex() {
-        let result = document.getElementById("abelian_latex");
-        let temporaire = "\\( \\pi [ ";
-        for (let index = 0; list.length > index; index++) {
-            if (index == list.length - 1) {
-                temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} ";
-            } else {
-                temporaire = temporaire + " \\mathbb{Z}/ " + list[index] + " \\mathbb{Z} \\times ";
-            }
-        }
-        temporaire = temporaire + "] \\)";
-        result.textContent = temporaire;
-        MathJax.typeset();
-    }
-
-    function update_symetric_latex() {
-        let input = document.getElementById("symetric_input");
-        let latex = document.getElementById("symetric_latex");
-        latex.textContent = "\\( \\pi[ \\mathfrak{S}_{" + input.value + "} ]  \\)";
-        MathJax.typeset();
-    }
-
-    function update_diedral_latex() {
-        let input = document.getElementById("diedral_input");
-        let latex = document.getElementById("diedral_latex");
-        latex.textContent = "\\( \\pi[ D_{" + (2 * parseInt(input.value)) + "} ]  \\)";
-        MathJax.typeset();
-    }
-
     function update_star_latex() {
         let input = document.getElementById("star_input");
         let latex = document.getElementById("star_latex");
@@ -319,9 +161,6 @@
     }
 
     function update_latex() {
-        update_abelian_latex();
-        update_symetric_latex();
-        update_diedral_latex();
         update_star_latex();
     }
 

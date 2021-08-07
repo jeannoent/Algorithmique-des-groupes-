@@ -1,5 +1,9 @@
 open Nb_gen
 open Loi_star
+open Loi_gp_ab
+open Permutation
+open Loi_diedral
+
 
 let add_inv_queue q i = Queue.add i q;;
 
@@ -35,11 +39,10 @@ let decomp_inv n =
     !res;;
 
 let abelian_rg arr = 
-    let n = ref 0 and len = Array.length arr in
-    for i = 0 to len-1 do
-        n := (!n)*arr.(i)
+    let n = ref 1 and len = Array.length arr in
+    for i = 0 to (len-1) do
+        n := (!n)*(arr.(i))
     done;
-    in
     rg (!n) (abelian_epsilon arr);;
 
 let sym_rg n = rg (fac n) (sym_epsilon n);;

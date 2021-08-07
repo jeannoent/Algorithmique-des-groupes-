@@ -1,6 +1,7 @@
 open Js_of_ocaml
 open Lib_gen.Nb_gen
 open Lib_gen.Graph_gen
+open Lib_gen.Decomposition_et_rang
 
 (* Gestion callback *)
 let _ = 
@@ -24,6 +25,14 @@ let _ =
         val diedralg = Js.wrap_meth_callback
             (fun _ x -> pi_diedral_graph(x))
         val starg = Js.wrap_meth_callback
-        (fun _ x -> pi_star_graph(x))
+            (fun _ x -> pi_star_graph(x))
+        val rabelian = Js.wrap_meth_callback
+            (fun _ x -> abelian_rg (Js.to_array x))
+        val rsymetric = Js.wrap_meth_callback
+            (fun _ x -> sym_rg(x))
+        val rdiedral = Js.wrap_meth_callback
+            (fun _ x -> died_rg(x))
+        val rstar = Js.wrap_meth_callback
+            (fun _ x -> star_rg(x))
       end);
 
