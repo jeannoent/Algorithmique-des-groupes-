@@ -10,7 +10,7 @@ let rg n e =
 	let res = ref 0 in
     let q = Queue.create() in
     Queue.add [] q;
-    while (not (Queue.is_empty q))  do
+    while not (Queue.is_empty q)  do
     	let h = Queue.pop q in
         	if est_gen(n,h,e) then
             (

@@ -98,17 +98,6 @@ let nb_gen ?print:(p=false) g  =
     ((string_of_big_int !res,string_of_big_int (fst modn),string_of_big_int (snd modn)),
     "{\"nodes\" : [],\"edges\" : []}")   
     
-
-
-(*returne a^n mod m*)    
-let rec pow_mod a n m = match n with
-  | 0 -> 1
-  | 1 -> a
-  | _ -> 
-    let b = pow_mod a (n / 2) m mod m in
-    (b * b mod m)* (if n mod 2 = 0 then 1 else a mod m ) mod m;;
-    
-
             
 let znz n (i,j) =                 
     	if i <= j then (j - i) mod n                  
