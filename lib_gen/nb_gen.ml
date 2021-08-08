@@ -5,7 +5,7 @@ open Big_int
 open Loi_star
 
 
-type ggraphe = int * int list * ((int*int) -> int)
+type group = {order : int; law : (int * int) -> int}
 
 
 let print_list_int l =
@@ -43,9 +43,12 @@ let constr_hash n =
     done;
     res
 
+
+
 (*vérifie si s génère le groupe de loi e à n éléments*)
-let est_gen ((g,s,e):ggraphe) =
-    let q = Queue.create () and n = g in
+let est_gen g s=
+    let n = g.order and e = g.law in
+    let q = Queue.create () in
     let t = constr_hash n in
     List.iter (fun i -> 
               Queue.add i q;
@@ -76,11 +79,12 @@ let next_subtree l max =
     
 (*retourne le nombre de parties génératrices d'un goupe d'ordre n de loi e*)
 
-let nb_gen ?print:(p=false) n e  =
+let nb_gen ?print:(p=false) g  =
+    let n = g.order in
 	let res= ref zero_big_int in
     let rec aux l=
         if p then print_list_int l;
-    	if est_gen (n,l,e) then
+    	if est_gen g l then
             (
             if p then print_endline "V";
         	res:= add_big_int !res (power_int_positive_int 2 (List.hd l))
@@ -95,35 +99,35 @@ let nb_gen ?print:(p=false) n e  =
     "{\"nodes\" : [],\"edges\" : []}")   
     
 
+let abelian_group arr = 
+    {
+        order = order arr;
+        law = abelian_epsilon arr
+    } 
 
-(*returne a^n mod m*)    
-let rec pow_mod a n m = match n with
-  | 0 -> 1
-  | 1 -> a
-  | _ -> 
-    let b = pow_mod a (n / 2) m mod m in
-    (b * b mod m)* (if n mod 2 = 0 then 1 else a mod m ) mod m;;
+let symmetric_group n = 
+    {
+        order = fac n ;
+        law = sym_epsilon n
+    } 
+
+let diedral_group n =
+    {
+        order = 2*n ; (*n ou 2*n ??? TODO fixer si nécessaire*)
+        law = died_epsilon n
+    }     
     
 
-            
-let znz n (i,j) =                 
-    	if i <= j then (j - i) mod n                  
-              else (n + (j-i) mod n) mod n;;                  
-                        
+let star_group n = 
+    {
+        order = euler n  ;
+        law = epsilon_star n
+    }  
 
-
-let abelian_gen arr = 
-    let n = ref 1 and m = Array.length arr in
-    for i = 0 to m-1 do
-          n := arr.(i)*(!n)
-    done;
-    nb_gen !n (abelian_epsilon arr);;
-
-
-let pi_symetric n = nb_gen (fac n) (sym_epsilon n);;       
+let pi_symetric n = nb_gen (symmetric_group n);;       
   
-let pi_cyclic n = nb_gen n (znz n);;
+let pi_cyclic n = nb_gen (abelian_group [|n|]);;
 
-let pi_diedral n = nb_gen n (died_epsilon n);;
+let pi_diedral n = nb_gen (diedral_group n);;
 
-let pi_star n = nb_gen (euler n) (epsilon_star n);;
+let pi_star n = nb_gen (star_group n);;

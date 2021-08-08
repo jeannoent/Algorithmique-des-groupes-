@@ -1,9 +1,5 @@
-open Loi_diedral
-open Loi_gp_ab
-open Permutation
 open Nb_gen
 open Big_int
-open Loi_star
 
 let str_set_oflist l =
   let rec aux li = match li with
@@ -52,12 +48,13 @@ let graph nodes edges =
 
 
 
-let nb_gen_draw n e  =
+let nb_gen_draw (g:group)  =
+  let n = g.order in
 	let res= ref zero_big_int in
   let nodes = ref [[]] in
   let edges = ref [] in
     let rec aux l=
-    	if est_gen (n,l,e) then
+    	if est_gen g l then
             (
         	res:= add_big_int !res (power_int_positive_int 2 (List.hd l))
             )
@@ -76,21 +73,17 @@ let nb_gen_draw n e  =
 
 
 let abelian_gen_graph arr = 
-    let n = ref 1 and m = Array.length arr in
-    for i = 0 to m-1 do
-          n := arr.(i)*(!n)
-    done;
-    nb_gen_draw !n (abelian_epsilon arr);;
+    nb_gen_draw (abelian_group arr);;
 
-let pi_symetric_graph n = nb_gen_draw (fac n) (sym_epsilon n);;       
+let pi_symetric_graph n = nb_gen_draw (symmetric_group n);;       
   
-let pi_cyclic_graph n = nb_gen_draw n (znz n);;
+let pi_cyclic_graph n = nb_gen_draw (abelian_group [|n|]);;
 
-let pi_diedral_graph n = nb_gen_draw n (died_epsilon n);;
+let pi_diedral_graph n = nb_gen_draw (diedral_group n);;
 
-let pi_star_graph n = nb_gen_draw (euler n) (epsilon_star n);;
-
-
+let pi_star_graph n = nb_gen_draw (star_group n);;
 
 
-let%test "graphe" = print_string (snd (nb_gen_draw 4 (znz 4)));false
+
+
+(*let%test "graphe" = print_string (snd (nb_gen_draw 4 (znz 4)));false*)
