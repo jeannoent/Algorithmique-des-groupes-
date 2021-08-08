@@ -5,25 +5,21 @@ open Permutation
 open Loi_diedral
 
 
-let add_inv_queue q i = Queue.add i q;;
 
 let rg n e = 
 	let res = ref 0 in
-    let stop = ref true in
     let q = Queue.create() in
-    	for i = 0 to n-1 do
-        	Queue.add [i] q
-        done;
-        while (not (Queue.is_empty q)) && !stop do
-        	let h = Queue.pop q in
-            	if est_gen(n,h,e) then
-                (
-                	res := List.length h;
-                    stop := false;
-                 )
-                 else List.iter (add_inv_queue q) (next_subtree h n)
-		done;
-        	!res;;
+    Queue.add [] q;
+    while (not (Queue.is_empty q))  do
+    	let h = Queue.pop q in
+        	if est_gen(n,h,e) then
+            (
+               	res := List.length h;
+                Queue.clear q
+            )
+             else List.iter (fun x -> Queue.add x q) (next_subtree h n)
+	done;
+    	!res;;
 
 let decomp_inv n =
 	let p = euler n in
