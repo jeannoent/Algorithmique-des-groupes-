@@ -75,6 +75,8 @@ let nb_gen_draw (g:group)  =
 let abelian_gen_graph arr = 
     nb_gen_draw (abelian_group arr);;
 
+let pi_abelian_graph arr = nb_gen_draw (abelian_group arr)    
+
 let pi_symetric_graph n = nb_gen_draw (symmetric_group n);;       
   
 let pi_cyclic_graph n = nb_gen_draw (abelian_group [|n|]);;
