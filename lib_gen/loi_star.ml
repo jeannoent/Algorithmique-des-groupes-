@@ -17,9 +17,17 @@ let starToInt n i =
     !res;;
     
 let mult_mod_n n (a,b) = (a*b) mod n;;
-let rec pow b e = match e with
-|0 -> 1
-|e -> b*(pow b (e-1));;
+
+
+(*returne a^n*)    
+let rec pow a n = match n with
+  | 0 -> 1
+  | 1 -> a
+  | _ -> 
+    let b = pow a (n / 2) in
+    b * b * (if n mod 2 = 0 then 1 else a)
+
+
 let inv n k = 
 	let p = euler n in
 	let r = pow k (p-1) in
