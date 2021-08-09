@@ -5,4 +5,5 @@ dune-project
 TIPE jean workspace.code-workspace
 .idea
 
+tests.ml
 test.html
