@@ -5,7 +5,7 @@ open Big_int
 open Loi_star
 
 
-type group = {order : int; law : (int * int) -> int}
+type group = {order : int;eps : (int * int) -> int}
 
 
 let print_list_int l =
@@ -47,7 +47,7 @@ let constr_hash n =
 
 (*vérifie si s génère le groupe de loi e à n éléments*)
 let est_gen g s=
-    let n = g.order and e = g.law in
+    let n = g.order and e = g.eps in
     let q = Queue.create () in
     let t = constr_hash n in
     List.iter (fun i -> 
@@ -79,7 +79,7 @@ let next_subtree l max =
     
 (*retourne le nombre de parties génératrices d'un goupe d'ordre n de loi e*)
 
-let nb_gen ?print:(p=false) g  =
+let nb_gen ?print:(p=false) g =
     let n = g.order in
 	let res= ref zero_big_int in
     let rec aux l=
@@ -102,26 +102,26 @@ let nb_gen ?print:(p=false) g  =
 let abelian_group arr = 
     {
         order = order arr;
-        law = abelian_epsilon arr
+       eps = abelian_epsilon arr
     } 
 
 let symmetric_group n = 
     {
         order = fac n ;
-        law = sym_epsilon n
+       eps = sym_epsilon n
     } 
 
 let diedral_group n =
     {
         order = 2*n ; (*n ou 2*n ??? TODO fixer si nécessaire*)
-        law = died_epsilon n
+       eps = died_epsilon n
     }     
     
 
 let star_group n = 
     {
         order = euler n  ;
-        law = epsilon_star n
+       eps = epsilon_star n
     }  
 
 
