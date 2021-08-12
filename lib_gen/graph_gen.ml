@@ -81,8 +81,6 @@ let abelian_gen_graph arr =
 
 let pi_symetric_graph n = nb_gen_draw (symmetric_group n);;       
   
-let pi_cyclic_graph n = nb_gen_draw (abelian_group [|n|]);;
-
 let pi_diedral_graph n = nb_gen_draw (diedral_group n);;
 
 let pi_star_graph n = nb_gen_draw (star_group n);;

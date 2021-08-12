@@ -129,8 +129,6 @@ let pi_abelian arr = nb_gen (abelian_group arr)
 
 let pi_symetric n = nb_gen (symmetric_group n)      
   
-let pi_cyclic n = nb_gen (abelian_group [|n|])
-
 let pi_diedral n = nb_gen (diedral_group n)
 
 let pi_star n = nb_gen (star_group n)
