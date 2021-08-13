@@ -72,10 +72,10 @@ let part_gen g f =
     let e = abelian_epsilon arr and f = recip_order arr in
         part_gen (!n,e) f
         
-let part_gen_sym n = part_gen (fac n, sym_epsilon n) (intToPerm n)*)
+let part_gen_sym n = part_gen ((fac n), sym_epsilon n) (intToPerm n)
 
 
-(*let part_gen_died n = part_gen g ()
+let part_gen_died n = part_gen (2*n,died_epsilon n) (recip_order)
 
 
-let part_gen_star g = part_gen g ()*)
+let part_gen_star g = part_gen (euler n, epsilon_star n) (intToStar n)*)
