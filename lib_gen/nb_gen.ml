@@ -4,9 +4,7 @@ open Permutation
 open Big_int
 open Loi_star
 
-
-type group = {order : int;eps : (int * int) -> int}
-
+type group = {order : int;loi : (int * int) -> int;eps : (int * int) -> int}
 
 let print_list_int l =
 	print_string "[";
@@ -102,18 +100,21 @@ let nb_gen ?print:(p=false) g =
 let abelian_group arr = 
     {
         order = order arr;
+       loi = abelian_law arr;
        eps = abelian_epsilon arr
     } 
 
 let symmetric_group n = 
     {
         order = fac n ;
+       loi = sym_op n;
        eps = sym_epsilon n
     } 
 
 let diedral_group n =
     {
-        order = 2*n ; (*n ou 2*n ??? TODO fixer si nécessaire*)
+        order = 2*n ; 
+       loi = died_op n;
        eps = died_epsilon n
     }     
     
@@ -121,6 +122,7 @@ let diedral_group n =
 let star_group n = 
     {
         order = euler n  ;
+       loi = star_op n;
        eps = epsilon_star n
     }  
 
