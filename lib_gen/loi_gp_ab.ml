@@ -83,8 +83,19 @@ let abelian_epsilon arr (i,j) =
         process_law arr;
     (snd !processed_laws).(i).(j)
     
+let abelian_law arr (i,j) = (snd !processed_laws).(i).(j)
 
     let sort comp arr =
         let res = Array.copy arr in
         Array.sort comp res;
         res
+
+
+let est_abelien g = 
+	let n = g.order and res = ref true in
+    	for i = 0 to n-1 do
+        	for j = 0 to n-1 do
+            	res := (!res)&&(f(i,j) = f(j,i))
+            done;
+        done;
+	!res;;

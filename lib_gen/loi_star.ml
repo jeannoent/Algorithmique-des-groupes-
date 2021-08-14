@@ -44,7 +44,7 @@ let intToStar n i =
 let int_inv n k = starToInt n (inv n (intToStar n k))
 
     
-let op n (i,j) = starToInt n (mult_mod_n n ((intToStar n i),(intToStar n j) ))
+let star_op n (i,j) = starToInt n (mult_mod_n n ((intToStar n i),(intToStar n j) ))
 
 
 let epsilon_star n (i,j) = op n (j,int_inv n i)
