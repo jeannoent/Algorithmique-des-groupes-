@@ -1,5 +1,4 @@
 open Nb_gen
-
 let order g x =
 	let res = ref 1 and temp = ref x in
     let f = g.loi in
