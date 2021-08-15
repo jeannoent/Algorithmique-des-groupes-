@@ -19,6 +19,19 @@ let exponent g =
     done;
     !res;;
 
+
+let abelian_exponent arr = exponent (abelian_group arr)
+
+
+let star_exponent n = exponent (star_group n)
+
+
+let died_exponent n = exponent (diedral_group n)
+
+
+let sym_exponent n = exponent (symmetric_group n)
+
+
 let exponent_list g f = (*à un groupe renvoie la liste des élément dont l'ordre est égal à l'exposant*)
 	let res = ref [] and e = exponent g in
     let n = g.order in
@@ -27,5 +40,17 @@ let exponent_list g f = (*à un groupe renvoie la liste des élément dont l'ord
         	res := i::(!res);
 	done;
     List.map f !res;;
+
+
+let exponent_list_star n = exponent_list (star_group n) (intToStar n);;
+
+
+let exponent_list_ab arr = exponent_list (abelian_group arr) (recip_order arr);;
+
+
+let exponent_list_died n = exponent_list (diedral_group n) (recip_order_died)
+
+
+let exponent_list_sym n = exponent_list (symmetric_group n) (intToPerm n)
 
 
