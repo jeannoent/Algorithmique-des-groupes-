@@ -97,10 +97,23 @@ let nb_gen ?print:(p=false) g =
     "{\"nodes\" : [],\"edges\" : []}")   
     
 
+
+
+
+let est_abelien g = 
+	let n = g.order and f = g.loi in
+    let res = ref true in
+    	for i = 0 to n-1 do
+        	for j = 0 to n-1 do
+            	res := (!res)&&(f(i,j) = f(j,i))
+            done;
+        done;
+	!res;;
+
 let abelian_group arr = 
     {
         order = order arr;
-       loi = abelian_law arr;
+       loi = abelian_law;
        eps = abelian_epsilon arr
     } 
 

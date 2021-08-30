@@ -1,4 +1,8 @@
 open Nb_gen
+open Loi_gp_ab
+open Loi_diedral
+open Loi_star
+open Permutation
 let order g x =
 	let res = ref 1 and temp = ref x in
     let f = g.loi in

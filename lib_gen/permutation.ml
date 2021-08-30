@@ -95,7 +95,7 @@ let permToInt t =
             aux dec 1;
     !k;;
 
-let sym_op n k1 k2 = 
+let sym_op n (k1,k2) = 
     let t1 = intToPerm n k1 in
     let t2 = intToPerm n k2 in
     permToInt (comp t1 t2)
