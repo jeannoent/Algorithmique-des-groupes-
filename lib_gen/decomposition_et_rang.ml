@@ -34,12 +34,7 @@ let decomp_inv n =
     	aux li;
     !res;;
 
-let abelian_rg arr = 
-    let n = ref 1 and len = Array.length arr in
-    for i = 0 to (len-1) do
-        n := (!n)*(arr.(i))
-    done;
-    rg (abelian_group arr);;
+let abelian_rg arr = rg (abelian_group arr);;
 
 let sym_rg n = rg (symmetric_group n);;
 
