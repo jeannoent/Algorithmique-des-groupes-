@@ -10,7 +10,7 @@
     (run %{bin:js_of_ocaml}
          --source-map
          --disable genprim
-         +base/runtime.js
+         +base\runtime.js
          +nat.js
          %{dep:main.bc} 
          -o %{targets} 

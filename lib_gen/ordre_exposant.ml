@@ -5,7 +5,7 @@ open Loi_star
 open Permutation
 let order g x =
 	let res = ref 1 and temp = ref x in
-    let f = g.loi in
+    let f = g.law in
     while !temp != 0 do
     	res := !res + 1;
         temp := f(!temp,x)

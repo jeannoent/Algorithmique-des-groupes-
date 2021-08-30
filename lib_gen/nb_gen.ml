@@ -4,7 +4,7 @@ open Permutation
 open Big_int
 open Loi_star
 
-type group = {order : int;loi : (int * int) -> int;eps : (int * int) -> int}
+type group = {order : int;law : (int * int) -> int}
 
 let print_list_int l =
 	print_string "[";
@@ -45,7 +45,7 @@ let constr_hash n =
 
 (*vérifie si s génère le groupe de loi e à n éléments*)
 let est_gen g s=
-    let n = g.order and e = g.eps in
+    let n = g.order and e = g.law in
     let q = Queue.create () in
     let t = constr_hash n in
     List.iter (fun i -> 
@@ -101,7 +101,7 @@ let nb_gen ?print:(p=false) g =
 
 
 let est_abelien g = 
-	let n = g.order and f = g.loi in
+	let n = g.order and f = g.law in
     let res = ref true in
     	for i = 0 to n-1 do
         	for j = 0 to n-1 do
@@ -113,30 +113,26 @@ let est_abelien g =
 let abelian_group arr = 
     {
         order = order arr;
-       loi = abelian_law;
-       eps = abelian_epsilon arr
+       law = abelian_law arr;
     } 
 
 let symmetric_group n = 
     {
         order = fac n ;
-       loi = sym_op n;
-       eps = sym_epsilon n
+       law = sym_op n;
     } 
 
 let diedral_group n =
     {
         order = 2*n ; 
-       loi = died_op n;
-       eps = died_epsilon n
+       law = died_op n;
     }     
     
 
 let star_group n = 
     {
         order = euler n  ;
-       loi = star_op n;
-       eps = epsilon_star n
+       law = star_op n;
     }  
 
 
