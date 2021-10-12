@@ -23,7 +23,7 @@ let starToInt n i =
 
 let mult_mod_n n (a,b) = (a*b) mod n
 
-(*returne a^n mod m*)    
+(*retourne a^n mod m*)    
 let rec pow_mod a n m = match n with
   | 0 -> 1
   | 1 -> a
