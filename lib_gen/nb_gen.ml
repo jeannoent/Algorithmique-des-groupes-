@@ -5,31 +5,49 @@ open Big_int
 open Loi_star
 
 type group = {order : int;law : (int * int) -> int}
+type nouage = Nil  of bool | N of (nouage array) 
 
-let print_list_int l =
+
+let print_bool = function
+    |true -> print_string "true"
+    |_ -> print_string "false"
+
+let print_list print l =
 	print_string "[";
     let rec aux  = function
     	|[] -> print_endline "]"
-        |[x] -> print_int x; print_string "]"
-        |x::l -> print_int x;print_string ";"; aux l 
+        |[x] -> print x; print_string "]"
+        |x::l -> print x;print_string ";"; aux l 
      in aux l
 
-let print_array arr = 
+let print_array print arr = 
     let n = Array.length arr in
     print_string "[|";
     for i=0 to n-2 do
-        print_int arr.(i);print_string ";"
+        print arr.(i);print_string ";"
     done;
-    print_int arr.(n-1);
+    print arr.(n-1);
     print_string "|]"
 
-let print_list_array l =    
-    print_string "[";
-    let rec aux  = function
-    	|[] -> print_endline "]"
-        |[x] -> print_array x; print_endline "]"
-        |x::l -> print_array x;print_string ";"; aux l 
-     in aux l
+let print_list_array l =  print_list (print_array print_int) l
+
+let rec print_nouage = function
+    |Nil(b) -> print_string "Nil(";print_bool b;print_string ") "
+    |N a -> print_string "N";print_array print_nouage a
+
+let next_subtree l max =
+	let min = try List.hd l with _ -> max in
+    Array.make min (Nil(false))
+
+
+let add t l =
+    let nl = List.rev l in
+    let rec aux t l = match t,l with
+        |N(arr),h::_::_ -> aux arr.(h) (List.tl l)
+        |N(arr),[n]-> arr.(n) <- N (Array.make n (Nil false))
+        |_ -> failwith "wtf"
+    in aux t nl
+(*retourne le nombre de parties génératrices d'un goupe d'ordre n de loi e*)
 
 
 (*construit un table de hash contenant 
@@ -40,7 +58,6 @@ let constr_hash n =
     	Hashtbl.add res i ()
     done;
     res
-
 
 
 (*vérifie si s génère le groupe de loi e à n éléments*)
@@ -65,33 +82,33 @@ let est_gen g s=
     Hashtbl.length t = 0
     
     
-type smol_tree = (int list)* int list list;;
-
 let next_subtree l max =
-	let min = try List.hd l with _ -> max in
+    let min = try List.hd l with _ -> max in
     let res = ref [] in
     for i=0 to min-1 do
-    	res:= ((min-1-i)::l) :: !res
+        res:= ((min-1-i)::l) :: !res
     done;
-    !res;;
-    
-(*retourne le nombre de parties génératrices d'un goupe d'ordre n de loi e*)
+    !res
 
 let nb_gen ?print:(p=false) g =
     let n = g.order in
+    let nouage = N(Array.make n (Nil false)) in
 	let res= ref zero_big_int in
-    let rec aux l=
-        if p then print_list_int l;
+    let rec aux (N(arr)) l=
+        if p then print_list print_int l;
+        let hd = List.hd l in
     	if est_gen g l then
             (
             if p then print_endline "V";
+            arr.(hd) <- Nil true;
         	res:= add_big_int !res (power_int_positive_int 2 (List.hd l))
             )
         else (
             if p then print_endline "F";
-            List.iter aux (next_subtree l n)
+            arr.(hd) <- N(Array.make hd (Nil false));
+            List.iter (aux arr.(hd)) (next_subtree l n)
             )   
-    in aux [];
+    in aux nouage [];
     let modn = (quomod_big_int !res (big_int_of_int n)) in
     ((string_of_big_int !res,string_of_big_int (fst modn),string_of_big_int (snd modn)),
     "{\"nodes\" : [],\"edges\" : []}")   
