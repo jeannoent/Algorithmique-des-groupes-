@@ -1,46 +1,49 @@
-.brand-logo {
+html{
+    background-color: #eeeeee;
+}
+.brand-logo{
     margin-left: 1vw;
 }
 
-.container {
-    margin-top: 10vh;
+.container{
+    margin-top: 20px;
 }
 
-.rsh4 {
-    margin-top: 15vh;
-}
-
-.section-title {
+.section-title{
     margin-bottom: 5vh;
 }
-
-.btn {
+.btn{
     width: 100%;
 }
-
-.progress {
-    background-color: #e1f5fe;
+.progress{
+    background-color:#e1f5fe;
 }
 
-.progress .indeterminate {
-    background-color: #03a9f4;
+.progress .indeterminate{
+    background-color:#03a9f4;
 }
 
-.switch label input[type=checkbox]:checked + .lever:after {
-    background-color: #03a9f4;
+.info-latex{
+    line-height: 3rem;
+    font-size: 1.7rem;
 }
 
-.switch label input[type=checkbox]:checked + .lever {
-    background-color: #68cefd;
+
+.latex{
+    font-size: 1.4rem;
+    overflow-x: auto;
 }
 
-#cy {
-    margin-left: 10%;
-    margin-right: 10%;
-    width: 80%;
-    height: 60vh;
-    left: 0;
-    top: 0;
-    z-index: 999;
-    border: 2px solid lightgrey;
+.header-stuff{
+    height: 3rem;
+    margin: 0 0 1rem 0;
+}
+
+.btn{
+    height: 3rem;
+    line-height: 3rem;
+}
+
+.half{
+    width: 50%;
 }

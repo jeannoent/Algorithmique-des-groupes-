@@ -6,6 +6,8 @@ open Lib_gen.Decomposition_et_rang
 (* Gestion callback *)
 let _ = 
   Js.Unsafe.global##.ocamlcallback := (object%js
+        val abelianorder = Js.wrap_meth_callback
+            (fun _ x -> Lib_gen.Loi_gp_ab.order (Js.to_array x))
         val abelian = Js.wrap_meth_callback
             (fun _ x -> pi_abelian (Js.to_array x))
         val cyclic = Js.wrap_meth_callback
