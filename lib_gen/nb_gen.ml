@@ -71,7 +71,7 @@ let next_subtree l max =
 	let min = try List.hd l with _ -> max in
     let res = ref [] in
     for i=0 to min-1 do
-    	res:= (i::l) :: !res
+    	res:= ((min-1-i)::l) :: !res
     done;
     !res;;
     
