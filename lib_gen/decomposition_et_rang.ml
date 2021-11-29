@@ -8,7 +8,9 @@ let rg g =
     let n = g.order in 
 	let res = ref 0 in
     let q = Queue.create() in
-    Queue.add [] q;
+    for i=0 to n-1 do
+        Queue.add [n-1-i] q
+    done;
     while not (Queue.is_empty q)  do
     	let h = Queue.pop q in
         	if est_gen g h then
@@ -16,7 +18,7 @@ let rg g =
                	res := List.length h;
                 Queue.clear q
             )
-             else List.iter (fun x -> Queue.add x q) (next_subtree h n)
+             else List.iter (fun x -> Queue.add x q) (next_subtree h)
 	done;
     	!res;;
 
@@ -46,7 +48,9 @@ let part_gen g f =
     let n = g.order in 
 	let res = ref [] in
     let q = Queue.create() in
-    Queue.add [] q;
+    for i=0 to n-1 do
+        Queue.add [n-1-i] q
+    done;
     while not (Queue.is_empty q)  do
     	let h = Queue.pop q in
         	if est_gen g h then
@@ -54,7 +58,7 @@ let part_gen g f =
                	res := h;
                 Queue.clear q
             )
-             else List.iter (fun x -> Queue.add x q) (next_subtree h n)
+             else List.iter (fun x -> Queue.add x q) (next_subtree h)
 	done;
     	List.map f !res;;
 
