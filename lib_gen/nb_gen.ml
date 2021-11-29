@@ -35,11 +35,6 @@ let rec print_nouage = function
     |Nil(b) -> print_string "Nil(";print_bool b;print_string ") "
     |N a -> print_string "N";print_array print_nouage a
 
-let next_subtree l max =
-	let min = try List.hd l with _ -> max in
-    Array.make min (Nil(false))
-
-
 let add t l =
     let nl = List.rev l in
     let rec aux t l = match t,l with
@@ -94,7 +89,10 @@ let nb_gen ?print:(p=false) g =
     let n = g.order in
     let nouage = N(Array.make n (Nil false)) in
 	let res= ref zero_big_int in
-    let rec aux (N(arr)) l=
+    let rec aux nou l=
+        let arr = match nou with
+            |N(a) -> a
+            |_ -> failwith "wut" in
         if p then print_list print_int l;
         let hd = List.hd l in
     	if est_gen g l then
