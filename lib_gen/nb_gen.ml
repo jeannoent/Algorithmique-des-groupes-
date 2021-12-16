@@ -47,23 +47,23 @@ let constr_hash n =
 let est_gen g s=
     let n = g.order and e = g.law in
     let q = Queue.create () in
-    let t = constr_hash n in
+    let t = Array.make n true in
+    let left = ref n in
     List.iter (fun i -> 
               Queue.add i q;
-              Hashtbl.remove t i)
+              t.(i) <- false;decr left)
               s;
     while not (Queue.is_empty q) do
     	let a = Queue.take q in
         for i = 0 to n-1 do 
-        	if Hashtbl.mem t i && not (Hashtbl.mem t (e(a,i))) then 
+        	if  t.(i) && not t.(e(a,i)) then 
             	(
-                 Hashtbl.remove t i;
+                 t.(i) <- false;decr left;
                  Queue.add i q; 
                 )
     	done;
 	done;
-    Hashtbl.length t = 0
-    
+    !left = 0    
     
 type smol_tree = (int list)* int list list;;
 
