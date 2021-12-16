@@ -77,8 +77,8 @@ let est_gen g s=
     Hashtbl.length t = 0
     
     
-let next_subtree l =
-    let min = List.hd l in
+let next_subtree l max =
+    let min = try List.hd l with _ -> max in
     let res = ref [] in
     for i=0 to min-1 do
         res:= ((min-1-i)::l) :: !res
@@ -104,7 +104,7 @@ let nb_gen ?print:(p=false) g =
         else (
             if p then print_endline "F";
             arr.(hd) <- N(Array.make hd (Nil false));
-            List.iter (aux arr.(hd)) (next_subtree l)
+            List.iter (aux arr.(hd)) (next_subtree l n)
             )   
     in aux nouage [];
     let modn = (quomod_big_int !res (big_int_of_int n)) in
@@ -112,36 +112,7 @@ let nb_gen ?print:(p=false) g =
     "{\"nodes\" : [],\"edges\" : []}")   
     
 
-let draw_nouage g = 
-    let n = g.order in
-    let nouage = N(Array.make n (Nil false)) in
-	let res= ref zero_big_int in
-    let rec aux nou l=
-        print_nouage nou;print_newline ();
-        print_list print_int l;
-        print_newline ();
-        let arr = match nou with
-            |N(a) -> a
-            |_ -> failwith "wut" in
-        let hd = List.hd l in
-    	if est_gen g l then
-            (
-            print_endline "V";
-            arr.(hd) <- Nil true;
-        	res:= add_big_int !res (power_int_positive_int 2 (List.hd l))
-            )
-        else (
-            print_endline "F, ";
-            print_int hd;
-            arr.(hd) <- if hd = 0 then Nil false else N(Array.make hd (Nil false));
-            List.iter (aux arr.(hd)) (next_subtree l)
-            )   
-    in 
-    for i=0 to n-1 do
-        aux nouage [i]
-    done;
-    nouage 
-    
+
 
 
 let est_abelien g = 

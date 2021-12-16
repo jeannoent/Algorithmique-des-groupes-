@@ -75,7 +75,7 @@ let%test_unit "multi-threading" = test_mt 40 *)
 
 let%test_unit "diédral" = print_string "nb gen D 2: " ; print_string  (fst3 (nb_gen ~print:true 4 (znz 4))); failwith "fuck"*)
 
-(*open Decomposition_et_rang
+open Decomposition_et_rang
 open Nb_gen
 
 let time f = 
@@ -84,7 +84,3 @@ let time f =
   print_float (Sys.time () -. a)
 
 let%test_unit ""= time (fun () -> rg (star_group 128))
-*)
-
-open Nb_gen
-let%test_unit "" = print_nouage (draw_nouage (abelian_group [|4|]))

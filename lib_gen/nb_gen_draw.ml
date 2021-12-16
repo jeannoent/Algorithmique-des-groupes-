@@ -70,11 +70,9 @@ let nb_gen_draw (g:group)  =
             let subtree = next_subtree_graph l n in
             nodes := (fst subtree)@ !nodes;
             edges := (snd subtree)@ !edges; 
-            List.iter aux (next_subtree l)
+            List.iter aux (next_subtree l n)
             )   
-    in for i=0 to n-1 do
-      aux [i]
-    done;
+    in aux [];
 
 
     let modn = (quomod_big_int !res (big_int_of_int n)) in
