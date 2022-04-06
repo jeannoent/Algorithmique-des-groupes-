@@ -4,9 +4,7 @@ open Permutation
 open Big_int
 open Loi_star
 
-
-type group = {order : int;eps : (int * int) -> int}
-
+type group = {order : int;law : (int * int) -> int}
 
 let print_list_int l =
 	print_string "[";
@@ -47,25 +45,25 @@ let constr_hash n =
 
 (*vérifie si s génère le groupe de loi e à n éléments*)
 let est_gen g s=
-    let n = g.order and e = g.eps in
+    let n = g.order and e = g.law in
     let q = Queue.create () in
-    let t = constr_hash n in
+    let t = Array.make n true in
+    let left = ref n in
     List.iter (fun i -> 
               Queue.add i q;
-              Hashtbl.remove t i)
+              t.(i) <- false;decr left)
               s;
     while not (Queue.is_empty q) do
     	let a = Queue.take q in
         for i = 0 to n-1 do 
-        	if Hashtbl.mem t i && not (Hashtbl.mem t (e(a,i))) then 
+        	if  t.(i) && not t.(e(a,i)) then 
             	(
-                 Hashtbl.remove t i;
+                 t.(i) <- false;decr left;
                  Queue.add i q; 
                 )
     	done;
 	done;
-    Hashtbl.length t = 0
-    
+    !left = 0    
     
 type smol_tree = (int list)* int list list;;
 
@@ -73,7 +71,7 @@ let next_subtree l max =
 	let min = try List.hd l with _ -> max in
     let res = ref [] in
     for i=0 to min-1 do
-    	res:= (i::l) :: !res
+    	res:= ((min-1-i)::l) :: !res
     done;
     !res;;
     
@@ -99,29 +97,42 @@ let nb_gen ?print:(p=false) g =
     "{\"nodes\" : [],\"edges\" : []}")   
     
 
+
+
+
+let est_abelien g = 
+	let n = g.order and f = g.law in
+    let res = ref true in
+    	for i = 0 to n-1 do
+        	for j = 0 to n-1 do
+            	res := (!res)&&(f(i,j) = f(j,i))
+            done;
+        done;
+	!res;;
+
 let abelian_group arr = 
     {
         order = order arr;
-       eps = abelian_epsilon arr
+       law = abelian_law arr;
     } 
 
 let symmetric_group n = 
     {
         order = fac n ;
-       eps = sym_epsilon n
+       law = sym_op n;
     } 
 
 let diedral_group n =
     {
-        order = 2*n ; (*n ou 2*n ??? TODO fixer si nécessaire*)
-       eps = died_epsilon n
+        order = 2*n ; 
+       law = died_op n;
     }     
     
 
 let star_group n = 
     {
         order = euler n  ;
-       eps = epsilon_star n
+       law = star_op n;
     }  
 
 

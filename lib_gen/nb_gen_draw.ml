@@ -1,12 +1,12 @@
 open Nb_gen
 open Big_int
 
-let str_set_oflist l =
+let str_set_oflist b l =
   let rec aux li = match li with
-      |[] -> "}"
-      |[x] -> (string_of_int  x)^"}"
-      |h::l ->(string_of_int h)^","^(aux l)
-in "{"^(aux l)
+      |[] -> Buffer.add_char b '}'
+      |[x] -> Buffer.add_string b (string_of_int  x); Buffer.add_char b '}'
+      |h::l ->Buffer.add_string b (string_of_int h); Buffer.add_char b ','; aux l
+in Buffer.add_char b '{';aux l
 
 
 (*returns the next subtree, as well as all the nodes that compose sais subtree*)
@@ -15,36 +15,44 @@ let next_subtree_graph l max =
   let next = ref [] in
   let nodes = ref [] in
   for i=0 to min-1 do
-    next:= (i::l) :: !next;
-    nodes := (l,(i::l)) :: !nodes
+    let u = (min-1-i)::l in
+    next:= u :: !next;
+    nodes := (l,u) :: !nodes
   done;
   (!next,!nodes)
 
 
-
-
-let str_nodes l =
+let str_nodes b  l =
   let rec aux li = match li with
-      |[] -> "]"
-      |[x] -> "{\"data\" : {\"id\" : \""^(str_set_oflist x)^"\" }}]"
-      |h::l -> "{\"data\" : {\"id\" : \""^(str_set_oflist h)^"\" }},"^(aux l)
-  in "["^(aux l)
+      |[] -> Buffer.add_char b ']'
+      |[x] -> Buffer.add_string b "{\"data\" : {\"id\" : \"";str_set_oflist b x;Buffer.add_string b "\" }}]"
+      |h::l -> Buffer.add_string b "{\"data\" : {\"id\" : \"";str_set_oflist b h;Buffer.add_string b "\" }},";aux l
+  in Buffer.add_char b '[';(aux l)
 
-let str_couple (a,b) =
-  "{\"data\" : {\"source\" : \""^(str_set_oflist a)^"\", \"target\" : \""^(str_set_oflist b)^"\"}}"
+let str_couple b (a1,a2) =
+  Buffer.add_string b "{\"data\" : {\"source\" : \"";
+  str_set_oflist b a1; 
+  Buffer.add_string b "\", \"target\" : \"";
+  str_set_oflist b a2;
+  Buffer.add_string b "\"}}"
 
 
-let str_edges l =   
+let str_edges b l =   
   let rec aux li = match li with
-      |[] -> "]"
-      |[x] -> (str_couple x)^"]"
-      |h::l -> (str_couple h)^","^(aux l)
-  in "["^(aux l)
+      |[] -> Buffer.add_char b ']'
+      |[x] -> str_couple b x;Buffer.add_char b ']'
+      |h::l -> str_couple b h;Buffer.add_char b ',';aux l
+  in  Buffer.add_char b '[';aux l
 
 
 let graph nodes edges = 
-  "{\"nodes\" : "^(str_nodes nodes) ^ ",\"edges\": "^(str_edges edges)^"}"
-
+  let b = Buffer.create 10000 in
+  Buffer.add_string b "{\"nodes\" : "
+  ;str_nodes b nodes;
+  Buffer.add_string b ",\"edges\": ";
+  str_edges b edges;
+  Buffer.add_char b '}';
+  Buffer.contents b
 
 
 

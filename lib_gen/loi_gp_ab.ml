@@ -72,19 +72,20 @@ let process_law arr =
     let res = Array.make_matrix ord ord 0 in
     for i=0 to ord-1 do
         for j=0 to ord-1 do
-        res.(i).(j) <- lex_order arr (opbis (recip_order arr i) (recip_order arr j) arr)
+        res.(i).(j) <- loi arr i j
         done;
     done;
     processed_laws := (arr,res)
 
 
-let abelian_epsilon arr (i,j) = 
+let abelian_law arr (i,j) = 
     if fst !processed_laws <> arr then 
         process_law arr;
     (snd !processed_laws).(i).(j)
     
+let sort comp arr =
+    let res = Array.copy arr in
+    Array.sort comp res;
+    res
 
-    let sort comp arr =
-        let res = Array.copy arr in
-        Array.sort comp res;
-        res
+

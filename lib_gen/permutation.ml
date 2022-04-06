@@ -37,7 +37,7 @@ let listrange n =
         else (k)::(aux n (k+1))
     in aux n 0;;
 
-let intToPerm k n =
+let intToPerm n k =
 	let res = Array.make n 0 in
     let t = decomposerFact k n in
     let l = ref (listrange n) in
@@ -95,15 +95,15 @@ let permToInt t =
             aux dec 1;
     !k;;
 
-let sym_op n k1 k2 = 
-    let t1 = intToPerm k1 n in
-    let t2 = intToPerm k2 n in
+let sym_op n (k1,k2) = 
+    let t1 = intToPerm n k1 in
+    let t2 = intToPerm n k2 in
     permToInt (comp t1 t2)
 ;;
 
 let sym_epsilon n (k1,k2) =
-    let t1 =  inv (intToPerm k1 n) in
-    let t2 = intToPerm k2 n in
+    let t1 =  inv (intToPerm n k1) in
+    let t2 = intToPerm n k2 in
     permToInt (comp t1 t2)
 ;;
         
