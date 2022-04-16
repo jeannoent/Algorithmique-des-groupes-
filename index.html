@@ -173,7 +173,46 @@
             </div>
         </div>
     </div>
-    <div id="diedral" class="row"></div>
+    <div id="diedral" class="row">
+        <div class="col s12 m6 l3 header-stuff">
+            <input id="diedral_input" name="resolve-input" placeholder="k?" type="number">
+        </div>
+        <div class="col s6 m3 l1 header-stuff">
+            <a class="waves-effect waves-light btn light-blue darken-4" onclick="compute('diedral')">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
+
+        <div class="col s12 m12 l6 header-stuff">
+            <div class="info-latex center" id="diedral_latex"></div>
+        </div>
+
+        <div class="col s12 m6 l4">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Partie génératrices</span>
+                    <p id="pi-explication">Là c est du code made in jean pour avoir le nombre de partie génératrice</p>
+                    <p id="pi-result" class="latex center">\( \pi [\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}] = 12[0] \)</p>
+                </div>
+                <div id="pi-compute" class="card-action">
+                    <a class="btn light-blue" onclick="">Calculer<i class="material-icons right">arrow_forward</i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m6 l4">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Rang</span>
+                    <p id="rg-explication">Bon j sais plus quoi mettre comme texte mais je pense que je peux mettre du \( latex \)</p>
+                    <p id="rg-result" class="latex center">\( rg( \mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}) = 1 \)</p>
+                </div>
+                <div id="rg-compute" class="card-action">
+                    <a class="btn light-blue" onclick="">Calculer<i class="material-icons right">arrow_forward</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="star" class="row"></div>
 </div>
 
@@ -186,6 +225,7 @@
     var page_elements = {};
     page_elements.abelian = {};
     page_elements.symetric = {};
+    page_elements.diedral = {};
     // A automatiser
     var sidenavs = document.querySelectorAll('.sidenav');
     var sidenavs_instances = M.Sidenav.init(sidenavs, {});
@@ -237,6 +277,24 @@
 
     page_elements.symetric.pi.compute.style.display = "none";
     page_elements.symetric.rg.compute.style.display = "none";
+
+    // Diedral
+    page_elements.diedral.pi={
+        explication: document.querySelector("div#diedral #pi-explication"),
+        result: document.querySelector("div#diedral #pi-result"),
+        compute: document.querySelector("div#diedral #pi-compute")
+    }
+    page_elements.diedral.rg={
+        explication: document.querySelector("div#diedral #rg-explication"),
+        result: document.querySelector("div#diedral #rg-result"),
+        compute: document.querySelector("div#diedral #rg-compute")
+    }
+
+    page_elements.diedral.pi.result.style.display = "none";
+    page_elements.diedral.rg.result.style.display = "none";
+
+    page_elements.diedral.pi.compute.style.display = "none";
+    page_elements.diedral.rg.compute.style.display = "none";
 
     function calculer(page, element){
         update_ocaml_result(page,element);
@@ -301,7 +359,6 @@
                 break
 
             case "symetric|pi":
-                console.log("symetric pi");
                 input = document.getElementById("symetric_input");
                 contenu = parseInt(input.value);
                 computed = ocamlcallback.symetric(contenu);
@@ -315,6 +372,24 @@
                 computed = ocamlcallback.rsymetric(contenu);
                 console.log(computed);
                 temporaire = "\\( rg( \\mathfrak{S}_{" + contenu + "} ) = " + computed + " \\)";
+                page_elements[page][element].result.textContent = temporaire;
+                MathJax.typeset();
+                break
+
+            case "diedral|pi":
+                input = document.getElementById("diedral_input");
+                contenu = parseInt(input.value);
+                computed = ocamlcallback.diedral(contenu);
+                temporaire = "\\( \\pi[ D_{" + contenu + "} ] = " + computed[1][1].c + "[" + computed[1][3].c + "]" + " \\)";
+                page_elements[page][element].result.textContent = temporaire;
+                MathJax.typeset();
+                break
+            case "diedral|rg":
+                input = document.getElementById("diedral_input");
+                contenu = parseInt(input.value);
+                computed = ocamlcallback.rdiedral(contenu);
+                console.log(computed);
+                temporaire = "\\( rg( D_{" + contenu + "} ) = " + computed + " \\)";
                 page_elements[page][element].result.textContent = temporaire;
                 MathJax.typeset();
                 break
@@ -354,14 +429,9 @@
                 calculer("symetric", "rg");
                 break
             case "diedral":
-                input = document.getElementById("diedral_input");
-                contenu = parseInt(input.value);
-                if (document.getElementById("diedral_graphe_checkbox").checked) {
-                    computed = ocamlcallback.diedralg(2 * contenu);
-                    graphe = true;
-                } else {
-                    computed = ocamlcallback.diedral(2 * contenu);
-                }
+                update_diedral_latex();
+                calculer("diedral", "pi");
+                calculer("diedral", "rg");
                 break
             case "star":
                 input = document.getElementById("star_input");
@@ -403,7 +473,7 @@
     function update_diedral_latex() {
         let input = document.getElementById("diedral_input");
         let latex = document.getElementById("diedral_latex");
-        latex.textContent = "\\( \\pi[ D_{" + (2 * parseInt(input.value)|0) + "} ]  \\)";
+        latex.textContent = "\\( D_{" + (2 * parseInt(input.value)|0) + "}  \\)";
         MathJax.typeset();
     }
 
