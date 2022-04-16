@@ -57,10 +57,10 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">Ordre</span>
-                    <p class="order-explication">L'ordre d'un groupe ... explication pas trop longue non plus juste pour savoir ce</p>
-                    <p class="order-result" class="latex center">\( o(\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}) = 4 \)</p>
+                    <p id="order-explication">L'ordre d'un groupe ... explication pas trop longue non plus juste pour savoir ce</p>
+                    <p id="order-result" class="latex center">\( o(\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}) = 4 \)</p>
                 </div>
-                <div class="order-compute" class="card-action">
+                <div id="order-compute" class="card-action">
                     <a class="btn light-blue" onclick="calculer('abelian', 'order')">Calculer<i class="material-icons right">arrow_forward</i></a>
                 </div>
             </div>
@@ -70,10 +70,10 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">Partie génératrices</span>
-                    <p class="pi-explication">Là c est du code made in jean pour avoir le nombre de partie génératrice</p>
-                    <p class="pi-result" class="latex center">\( \pi [\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}] = 12[0] \)</p>
+                    <p id="pi-explication">Là c est du code made in jean pour avoir le nombre de partie génératrice</p>
+                    <p id="pi-result" class="latex center">\( \pi [\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}] = 12[0] \)</p>
                 </div>
-                <div class="pi-compute" class="card-action">
+                <div id="pi-compute" class="card-action">
                     <a class="btn light-blue" onclick="calculer('abelian', 'pi')">Calculer<i class="material-icons right">arrow_forward</i></a>
                 </div>
             </div>
@@ -83,10 +83,10 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">Rang</span>
-                    <p class="rg-explication">Bon j sais plus quoi mettre comme texte mais je pense que je peux mettre du \( latex \)</p>
-                    <p class="rg-result" class="latex center">\( rg( \mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}) = 1 \)</p>
+                    <p id="rg-explication">Bon j sais plus quoi mettre comme texte mais je pense que je peux mettre du \( latex \)</p>
+                    <p id="rg-result" class="latex center">\( rg( \mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}) = 1 \)</p>
                 </div>
-                <div class="rg-compute" class="card-action">
+                <div id="rg-compute" class="card-action">
                     <a class="btn light-blue" onclick="calculer('abelian', 'rg')">Calculer<i class="material-icons right">arrow_forward</i></a>
                 </div>
             </div>
@@ -151,10 +151,10 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">Partie génératrices</span>
-                    <p class="pi-explication">Là c est du code made in jean pour avoir le nombre de partie génératrice</p>
-                    <p class="pi-result" class="latex center">\( \pi [\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}] = 12[0] \)</p>
+                    <p id="pi-explication">Là c est du code made in jean pour avoir le nombre de partie génératrice</p>
+                    <p id="pi-result" class="latex center">\( \pi [\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}] = 12[0] \)</p>
                 </div>
-                <div id="class-compute" class="card-action">
+                <div id="pi-compute" class="card-action">
                     <a class="btn light-blue" onclick="">Calculer<i class="material-icons right">arrow_forward</i></a>
                 </div>
             </div>
@@ -164,10 +164,10 @@
             <div class="card">
                 <div class="card-content">
                     <span class="card-title">Rang</span>
-                    <p class="rg-explication">Bon j sais plus quoi mettre comme texte mais je pense que je peux mettre du \( latex \)</p>
-                    <p class="rg-result" class="latex center">\( rg( \mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}) = 1 \)</p>
+                    <p id="rg-explication">Bon j sais plus quoi mettre comme texte mais je pense que je peux mettre du \( latex \)</p>
+                    <p id="rg-result" class="latex center">\( rg( \mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}) = 1 \)</p>
                 </div>
-                <div class="rg-compute" class="card-action">
+                <div id="rg-compute" class="card-action">
                     <a class="btn light-blue" onclick="">Calculer<i class="material-icons right">arrow_forward</i></a>
                 </div>
             </div>
@@ -201,19 +201,19 @@
     update_latex();
     // Abelian
     page_elements.abelian.order={
-        explication: document.querySelector("div#abelian .order-explication"),
-        result: document.querySelector("div#abelian .order-result"),
-        compute: document.querySelector("div#abelian .order-compute")
+        explication: document.querySelector("div#abelian #order-explication"),
+        result: document.querySelector("div#abelian #order-result"),
+        compute: document.querySelector("div#abelian #order-compute")
     }
     page_elements.abelian.pi={
-        explication: document.querySelector("div#abelian .pi-explication"),
-        result: document.querySelector("div#abelian .pi-result"),
-        compute: document.querySelector("div#abelian .pi-compute")
+        explication: document.querySelector("div#abelian #pi-explication"),
+        result: document.querySelector("div#abelian #pi-result"),
+        compute: document.querySelector("div#abelian #pi-compute")
     }
     page_elements.abelian.rg={
-        explication: document.querySelector("div#abelian .rg-explication"),
-        result: document.querySelector("div#abelian .rg-result"),
-        compute: document.querySelector("div#abelian .rg-compute")
+        explication: document.querySelector("div#abelian #rg-explication"),
+        result: document.querySelector("div#abelian #rg-result"),
+        compute: document.querySelector("div#abelian #rg-compute")
     }
 
     page_elements.abelian.order.result.style.display = "none";
@@ -222,14 +222,14 @@
 
     //Symmetric
     page_elements.symetric.pi={
-        explication: document.querySelector("div#symetric .pi-explication"),
-        result: document.querySelector("div#symetric .pi-result"),
-        compute: document.querySelector("div#symetric .pi-compute")
+        explication: document.querySelector("div#symetric #pi-explication"),
+        result: document.querySelector("div#symetric #pi-result"),
+        compute: document.querySelector("div#symetric #pi-compute")
     }
     page_elements.symetric.rg={
-        explication: document.querySelector("div#symetric .rg-explication"),
-        result: document.querySelector("div#symetric .rg-result"),
-        compute: document.querySelector("div#symetric .rg-compute")
+        explication: document.querySelector("div#symetric #rg-explication"),
+        result: document.querySelector("div#symetric #rg-result"),
+        compute: document.querySelector("div#symetric #rg-compute")
     }
 
     page_elements.symetric.pi.result.style.display = "none";
