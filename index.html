@@ -213,7 +213,46 @@
             </div>
         </div>
     </div>
-    <div id="star" class="row"></div>
+    <div id="star" class="row">
+        <div class="col s12 m6 l3 header-stuff">
+            <input id="star_input" name="resolve-input" placeholder="k?" type="number">
+        </div>
+        <div class="col s6 m3 l1 header-stuff">
+            <a class="waves-effect waves-light btn light-blue darken-4" onclick="compute('star')">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
+
+        <div class="col s12 m12 l6 header-stuff">
+            <div class="info-latex center" id="star_latex"></div>
+        </div>
+
+        <div class="col s12 m6 l4">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Partie génératrices</span>
+                    <p id="pi-explication">Là c est du code made in jean pour avoir le nombre de partie génératrice</p>
+                    <p id="pi-result" class="latex center">\( \pi [\mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}] = 12[0] \)</p>
+                </div>
+                <div id="pi-compute" class="card-action">
+                    <a class="btn light-blue" onclick="">Calculer<i class="material-icons right">arrow_forward</i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 m6 l4">
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Rang</span>
+                    <p id="rg-explication">Bon j sais plus quoi mettre comme texte mais je pense que je peux mettre du \( latex \)</p>
+                    <p id="rg-result" class="latex center">\( rg( \mathbb{Z} / 4 \mathbb{Z} \times \mathbb{Z} / k \mathbb{Z}) = 1 \)</p>
+                </div>
+                <div id="rg-compute" class="card-action">
+                    <a class="btn light-blue" onclick="">Calculer<i class="material-icons right">arrow_forward</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -226,6 +265,7 @@
     page_elements.abelian = {};
     page_elements.symetric = {};
     page_elements.diedral = {};
+    page_elements.star = {};
     // A automatiser
     var sidenavs = document.querySelectorAll('.sidenav');
     var sidenavs_instances = M.Sidenav.init(sidenavs, {});
@@ -295,6 +335,24 @@
 
     page_elements.diedral.pi.compute.style.display = "none";
     page_elements.diedral.rg.compute.style.display = "none";
+
+    // Star
+    page_elements.star.pi={
+        explication: document.querySelector("div#star #pi-explication"),
+        result: document.querySelector("div#star #pi-result"),
+        compute: document.querySelector("div#star #pi-compute")
+    }
+    page_elements.star.rg={
+        explication: document.querySelector("div#star #rg-explication"),
+        result: document.querySelector("div#star #rg-result"),
+        compute: document.querySelector("div#star #rg-compute")
+    }
+
+    page_elements.star.pi.result.style.display = "none";
+    page_elements.star.rg.result.style.display = "none";
+
+    page_elements.star.pi.compute.style.display = "none";
+    page_elements.star.rg.compute.style.display = "none";
 
     function calculer(page, element){
         update_ocaml_result(page,element);
@@ -393,6 +451,25 @@
                 page_elements[page][element].result.textContent = temporaire;
                 MathJax.typeset();
                 break
+
+            case "star|pi":
+                input = document.getElementById("star_input");
+                contenu = parseInt(input.value);
+                computed = ocamlcallback.star(contenu);
+                "\\( \\pi[(\\mathbb{Z}/" + (parseInt(input.value)|0) + "\\mathbb{Z})^\\star" + "]  \\)"
+                temporaire = "\\( \\pi[ (\\mathbb{Z}/" + contenu + "\\mathbb{Z})^\\star ] = " + computed[1][1].c + "[" + computed[1][3].c + "]" + " \\)";
+                page_elements[page][element].result.textContent = temporaire;
+                MathJax.typeset();
+                break
+            case "star|rg":
+                input = document.getElementById("star_input");
+                contenu = parseInt(input.value);
+                computed = ocamlcallback.rstar(contenu);
+                console.log(computed);
+                temporaire = "\\( \\pi[ (\\mathbb{Z}/" + contenu + "\\mathbb{Z})^\\star ] = " + computed + " \\)";
+                page_elements[page][element].result.textContent = temporaire;
+                MathJax.typeset();
+                break
         }
     }
 
@@ -434,14 +511,9 @@
                 calculer("diedral", "rg");
                 break
             case "star":
-                input = document.getElementById("star_input");
-                contenu = parseInt(input.value);
-                if (document.getElementById("star_graphe_checkbox").checked) {
-                    computed = ocamlcallback.starg(contenu);
-                    graphe = true;
-                } else {
-                    computed = ocamlcallback.star(contenu);
-                }
+                update_star_latex();
+                calculer("star", "pi");
+                calculer("star", "rg");
                 break
         }
         MathJax.typeset();
