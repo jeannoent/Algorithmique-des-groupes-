@@ -13,9 +13,9 @@ let _ =
         val symetric = Js.wrap_meth_callback
             (fun _ x -> pi_symetric(x))
         val diedral = Js.wrap_meth_callback
-            (fun _ x -> pi_diedral(x)) (* Partie gen groupe diedral : Nope *)
+            (fun _ x -> pi_diedral(x))
         val star = Js.wrap_meth_callback
-            (fun _ x -> pi_star(x)) (* Partie gen groupe star : Nope *)
+            (fun _ x -> pi_star(x))
         val abeliang = Js.wrap_meth_callback
             (fun _ x -> pi_abelian_graph (Js.to_array x))
         val symetricg = Js.wrap_meth_callback
@@ -29,10 +29,10 @@ let _ =
         val rsymetric = Js.wrap_meth_callback
             (fun _ x -> sym_rg(x))
         val rdiedral = Js.wrap_meth_callback
-            (fun _ x -> died_rg(x)) (* Partie rang diedral : Nope *)
+            (fun _ x -> died_rg(x))
         val rstar = Js.wrap_meth_callback
-            (fun _ x -> star_rg(x)) (* Partie rang star : Nope *)
+            (fun _ x -> star_rg(x))
         val dstar = Js.wrap_meth_callback
-            (fun _ x -> decomp_inv(x)) (* C'est quoi ca ? *)
+            (fun _ x -> decomp_inv(x))
       end);
 
